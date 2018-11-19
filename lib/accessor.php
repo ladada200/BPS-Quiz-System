@@ -6,6 +6,7 @@ require_once ($projectRoot . '/lib/ConnectionManager.php');
 
 class accessor {
     private $conn = "";
+    
     private $loginStatementString = "SELECT UserName, Password, Permission FROM USER WHERE UserName = :username AND Password = :Password";
     private $searchQuizByIdStatementString = "SELECT * FROM Quiz WHERE ID=:bindParam";
     private $searchQuizByTagStatementString = "SELECT * FROM Quiz WHERE tags LIKE \"%:bindParam%\"";
@@ -20,8 +21,6 @@ class accessor {
     private $loginStatement = NULL;
     private $searchQuiz = NULL;
     private $searchQuestion = NULL;
-    
-    
     
     public function __construct() {
         $cm = new ConnectionManager();
