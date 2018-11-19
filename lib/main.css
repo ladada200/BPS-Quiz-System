@@ -1,0 +1,39 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 19, 2018, 8:39:59 AM
+    Author     : unkno
+*/
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    width: 100%;
+}
+
+
+.rightAlign {
+    float: left;
+    text-align: right;
+}
+.rightAlign div {
+    height: 21px;
+
+}
+.leftAlign div {
+    width: 300px;
+}
+#infoTable {
+    width: calc(100% -20px);
+    padding: 20px;
+}
+#infoTable div div {
+    margin: 5px;
+}
+#infoTable div button {
+    align-items: right;
+}
