@@ -11,4 +11,8 @@ class setup {
     const dbName = "restaurantDB";
     const UName = "temp1234";
     const PWord = "Haha1Win";
+    function __construct() {
+        
+    }
+
 }
