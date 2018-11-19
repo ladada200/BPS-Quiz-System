@@ -8,9 +8,10 @@
 
 class setup {
     const host = "localhost";
-    const dbName = "restaurantDB";
+    const dbName = "BPSDB";
     const UName = "temp1234";
     const PWord = "Haha1Win";
+    
     function __construct() {
         
     }
