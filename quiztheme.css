@@ -1,0 +1,79 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	background-color: #F2F2F2;
+}
+
+.quizcontainer {
+	margin: 0%;
+}
+.header {
+	background-color: #A61F2B;
+	text-align: center;
+	padding-bottom: 5%;
+	padding-top: 10%;
+	font-family: 'Montserrat', san-serif;
+	color: #B7B7B7;
+}
+
+.header h1 {
+	color: #F2F2F2;
+	font-size: 600%;
+}
+
+.main {
+	background-color: #F2F2F2;
+}
+
+.lines {
+		border-right-style: outset;
+	border-left-style: outset;
+	border-color: #1C1426;
+}
+
+.login {
+	margin-right: 20%;
+	margin-left: 20%;
+	margin-top: 10%;
+	margin-bottom: 20%;
+	padding: 2%;
+	background-color: #A61F2B;
+	font-family: "Lato";
+	color: #F2F2F2;
+	
+}
+
+.login h2 {
+	text-align: center;
+}
+
+
+.login button {
+	
+	background-color: #1C1426;
+	border-color: #07050A;
+}
+
+.login button:hover {
+	
+	background-color: #312244;
+	border-color: #322445;
+}
+
+.login button:active {
+		background-color: #1C1426;
+	border-color: #07050A;
+}
+
+.login a {
+	color: #F2F2F2;
+}
+
+.login a:hover {
+	color: #1C1426;
+}
+
+.sidetext {
+	text-align: right;
+}
