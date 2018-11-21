@@ -74,6 +74,13 @@ body {
 	color: #1C1426;
 }
 
-.sidetext {
-	text-align: right;
+.footer {
+	background-color:#B4B8B8;
+	text-align: center;
+	font-family: 'Abel';
+	padding: 2%;
+}
+
+.center {
+	text-align: center;
 }
