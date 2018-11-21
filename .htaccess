@@ -1,9 +1,19 @@
 #URL mapping for REST API Demo
+DirectoryIndex index.html index.php main.html main.php 
+Options +FollowSymLinks
+
 RewriteEngine on
 
-RewriteRule ^menuService/items$ api/menuItemService.php [NC]
-RewriteRule ^menuService/items/([0-9]+)$ api/menuItemService.php?itemid=$1 [NC]
-RewriteRule ^menuService/categories$ api/menuCategoryService.php [NC]
-RewriteRule ^menuService/categories/(\w{3})$ api/menuCategoryService.php?categoryid=$1 [NC]
+#File handling / WIP
+AddType application/octect-stream .pdf 
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.+)\.pdf$  /api/pdf.php?file=$1 [L,NC,QSA]
 
+#forbidden section
+RewriteRule "\.exe" "-" [F]
 
+#rewrite rules
+RewriteRule ^results/?username=(\w{16})$ entity/quizResults.php?uName=$1 [NC]
+RewriteRule ^login$ api/handleAccount.php?login$ [NC]
+RewriteRule ^admin$ api/handleAccount.php?admin$ [NC]
+RewriteRule ^super$ api/handleAccount.php?super$ [NC]

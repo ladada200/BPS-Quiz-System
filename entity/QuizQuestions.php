@@ -10,19 +10,18 @@ class QuizQuestions {
     private $quizID = 0;
     private $tags = [];
     private $question = [];
-    private $quizAnswers = [];
     
     function __construct($quizID, $question, $tags) {
         $this->quizID = $quizID;
-        array_push($this->question, $question->getChoices());
-        foreach($tags as $value) {
-            array_push($this->tags, $value);
-        }
-        array_push($this->quizAnswers, $question->getAnswer());
+        $obj = new \stdClass();
+        $obj->question = $question->getQuestionText();
+        $obj->choices = $question->getChoices();
+        $obj->answer = $question->getAnswer();
+        array_push($this->tags, $tags);
+        array_push($this->question, $obj);
+
     }
-    function getQuizAnswers() {
-        return $this->quizAnswers;
-    }
+
     function getQuizID() {
         return $this->quizID;
     }
