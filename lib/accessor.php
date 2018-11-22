@@ -135,6 +135,7 @@ class accessor {
         return $output;
     }   //Log in user
     
+    
     public function addUser($username, $password) {
         $output = false;
         try {
