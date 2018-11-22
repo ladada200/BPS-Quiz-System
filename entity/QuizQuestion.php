@@ -8,11 +8,13 @@
 
 class QuizQuestion {
     private $questionID = 0;
+    private $questionText = "";
     private $choices = [];
     private $answer = 0;
     
-    public function __construct($questionID, $choices, $answer) {
+    public function __construct($questionID, $questionText, $choices, $answer) {
         $this->questionID = $questionID;
+        $this->questionText = $questionText;
         foreach($choices as $value) {
             array_push($this->choices, $value);
         }
@@ -21,6 +23,10 @@ class QuizQuestion {
 
     function getQuestionID() {
         return $this->questionID;
+    }
+    
+    function getQuestionText() {
+        return $this->questionText;
     }
 
     function getChoices() {

@@ -1,13 +1,27 @@
 <?php
 
+/*
+ * Author   :   Christopher Rupert
+ * Version  :   1.0.1
+ * Last     :   11/21/2018
+ * Desc     :   Accessability document used for long-hand SQL Queries until SQL 
+ *               are made and utilized.
+ */
+
 $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
 require_once ($projectRoot . '/utils/ChromePhp.php');
 require_once ($projectRoot . '/lib/ConnectionManager.php');
 
 class accessor {
     private $conn = "";
+    private $salt = "4d494e497469676572";
     
     private $loginStatementString = "SELECT UserName, Password, Permission FROM USER WHERE UserName = :username AND Password = :Password";
+    private $addUserStatementString = "INSERT INTO USER (UserName, Password) VALUES (:username, :password)";
+    private $removeUserStatementString =  "DELETE FROM USER WHERE UserName = :username";
+    private $updatePasswordStatementString = "UPDATE USER SET Password = :password WHERE UserName=:username";
+    private $showAllUsersStatementString = "SELECT UserID, Username, Permission FROM USERS";
+            
     private $searchQuizByIdStatementString = "SELECT * FROM Quiz WHERE ID=:bindParam";
     private $searchQuizByTagStatementString = "SELECT * FROM Quiz WHERE tags LIKE \"%:bindParam%\"";
     private $searchQuizByWITStatementString = "SELECT * FROM Quiz WHERE QuizTitle LIKE \"%:bindParam%\" ";
@@ -19,6 +33,10 @@ class accessor {
     
     //log into system
     private $loginStatement = NULL;
+    private $addUserStatement = NULL;
+    private $removeUserStatement = NULL;
+    private $updateUserStatement = NULL;
+    private $showAllUsersStatement = NULL;
     private $searchQuiz = NULL;
     private $searchQuestion = NULL;
     
@@ -31,6 +49,10 @@ class accessor {
         $this->loginStatement = $this->conn->prepare($this->loginStatementString);
         if (is_null($this->loginStatement)) {
             throw new Exception("bad statement: '" . $this->loginStatementString . "'");
+        }
+        $this->addUserStatement = $this->conn->prepare($this->addUserStatementString);
+        if (is_null($this->addUserStatement)) {
+            throw new Exception("bad statement: '" . $this->addUserStatementString . "'");
         }
         //search quiz
         $this->searchQuiz = $this->conn->prepare($this->searchQuizByIdStatementString);
@@ -62,7 +84,118 @@ class accessor {
         if (is_null($this->searchQuiz)) {
             throw new Exception("bad statement: '" . $this->searchQuiz . "'");
         }
-    }
-
-      
+    }   //Regular constructor
+    
+    public function searchQuiz($input) {
+        switch($input) {
+            case "id":
+                $searchQuiz = $this->searchQuizByIdStatementString;
+                break;
+            case "tag":
+                $searchQuiz = $this->searchQuizByTagStatementString;
+                break;
+            case "wit": //words in title
+                $searchQuiz = $this->searchQuizByWITStatementString;
+                break;
+        }
+        return $searchQuiz;
+    }   //Search quiz by id, tags, etc.
+    
+    public function searchQuestion($input) {
+        switch($input) {
+            case "id":
+                $searchQuestion = $this->searchQuestionByIdStatementString;
+                break;
+            case "witc":    //words in the choices
+                $searchQuestion = $this->searchQuestionByWITCStatementString;
+                break;
+            case "wiqt":    //words in question title
+                $searchQuestion = $this->searchQuestionByWIQTStatementString;
+                break;
+            case "tag":
+                $searchQuestion = $this->searchQuestionByTagStatementString;
+                break;
+        }
+        return $searchQuestion;
+    }   //search quiz by question id, tags, words in title, etc.
+    
+    public function login($username, $password) {
+        $output = NULL;
+        try {
+            $temp = $this->conn->prepare($this->loginStatementString);
+            $temp->bindParam(":username", $username);
+            $temp->bindParam(":password", password_verify($password, $this->salt));
+            $temp->execute();
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        } finally {
+            $temp->closeCursor();
+            $output = $temp->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $output;
+    }   //Log in user
+    
+    
+    public function addUser($username, $password) {
+        $output = false;
+        try {
+            $temp = $this->conn->prepare($this->addUserStatementString);
+            $temp->bindParam(":username", $username);
+            $temp->bindParam(":password", password_hash($password, $salt));
+            $temp->execute();
+        } catch (Exception $ex) {
+            $output = "***ERROR: " . $ex->getMessage();
+        } finally {
+            $temp->closeCursor();
+            $output = true;
+        }
+        return $output;
+    }   //Create new user
+    
+    public function showAll() {
+        try {
+            $showAllUsersStatement = $this->showAllUsersStatementString;
+            $showAllUsersStatement->execute();
+            $res = $showAllUsersStatement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $ex) {
+            $res = $ex->getMessage();
+        } finally {
+            $showAllUsersStatement->closeCursor();
+            return $res;
+        }
+    }   //read all users from database
+    
+    public function removeUser($username) {
+        $res = false;
+        try {
+            $temp = $this->conn->prepare($this->removeUserStatementString);
+            $temp->bindParam(":username", $username);
+            $temp->execute();
+        } catch (Exception $ex) {
+            $res = $ex->getMessage();
+        } finally {
+            $temp->closeCursor();
+            $res = true;
+        }
+        return $res;
+    }   //remove user from database
+    
+    public function updateUser($username, $password) {
+        $res = false;
+        try {
+            $temp = $this->conn->prepare($this->updatePasswordStatementString);
+            $temp->bindParam(":username",$username);
+            $temp->bindParam(":password",$password);
+            $temp->execute();
+        } catch (Exception $ex) {
+            $res = $ex->getMessage();
+        } finally {
+            $temp->closeCursor();
+            $res = true;
+        }
+        return $res;
+    }   //update user password
+    
+    
+    
 }

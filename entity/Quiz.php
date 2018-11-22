@@ -9,25 +9,19 @@
 class Quiz implements JsonSerializable {
     private $quizID = 0;
     private $quizTitle = "";
-    private $quizTags = [];
     private $quizQuestions = [];
-    private $quizAnswers = [];
+    private $tags = [];
     
     function __construct($quizTitle, $input) {
-        
+        array_push($this->tags, "NULL");
         $this->quizTitle = $quizTitle;
         foreach($input as $val) {
             $this->quizID = $val->getQuizID();
-
-            foreach($val->getTags() as $value) {
-                array_push($this->quizTags, $value);
-            }
+ 
             foreach($val->getQuestion() as $value) {
                 array_push($this->quizQuestions, $value);
             }
-            foreach($val->getQuizAnswers() as $value) {
-                array_push($this->quizAnswers, $value);
-            }
+            
         }
         
     }    
