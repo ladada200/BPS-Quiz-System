@@ -1,7 +1,7 @@
 <?php
 
 // put your code here
-$projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
+$projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System'; //test
  require($projectRoot . '/lib/accessor.php');
  require($projectRoot . '/entity/Quiz.php');
  require($projectRoot . '/entity/QuizQuestion.php');
