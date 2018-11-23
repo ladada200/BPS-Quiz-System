@@ -8,7 +8,9 @@ $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
 if ($method === "POST") {
     //method to check if user can be authenticated
-    echo var_dump(checkUser($_POST['username'], $_POST['password']));
+    $body = file_get_contents('php://input');
+    $contents = json_decode($body, true);
+        echo var_dump(checkUser($_POST['username'], $_POST['password']));
 }
 
 class userMethod {

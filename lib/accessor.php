@@ -2,7 +2,7 @@
 
 /*
  * Author   :   Christopher Rupert
- * Version  :   1.0.1
+ * Version  :   1.0.2
  * Last     :   11/21/2018
  * Desc     :   Accessability document used for long-hand SQL Queries until SQL 
  *               are made and utilized.
@@ -16,7 +16,7 @@ class accessor {
     private $conn = "";
     private $salt = "4d494e497469676572";
     
-    private $loginStatementString = "SELECT UserName, Password, Permission FROM USER WHERE UserName = :username AND Password = :Password";
+    private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
     private $addUserStatementString = "INSERT INTO USER (UserName, Password) VALUES (:username, :password)";
     private $removeUserStatementString =  "DELETE FROM USER WHERE UserName = :username";
     private $updatePasswordStatementString = "UPDATE USER SET Password = :password WHERE UserName=:username";
@@ -121,18 +121,27 @@ class accessor {
     
     public function login($username, $password) {
         $output = NULL;
+        $tempOut = NULL;
         try {
             $temp = $this->conn->prepare($this->loginStatementString);
             $temp->bindParam(":username", $username);
-            $temp->bindParam(":password", password_verify($password, $this->salt));
             $temp->execute();
         } catch (Exception $ex) {
-            echo $ex->getMessage();
+            $tempOut = $ex->getMessage();
         } finally {
             $temp->closeCursor();
             $output = $temp->fetchAll(PDO::FETCH_ASSOC);
         }
-        return $output;
+
+        try {
+            $tempOut = password_verify($password, $output->Password) ? $output->Permission : "guest";
+        } catch (Exception $ex) {
+            $tempOut = "ERROR: Could not verify User";
+        } finally {
+            $tempOut = $output;
+        }
+
+        return $tempOut;
     }   //Log in user
     
     
