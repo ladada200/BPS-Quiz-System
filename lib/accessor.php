@@ -144,7 +144,6 @@ class accessor {
         return $tempOut;
     }   //Log in user
     
-    
     public function addUser($username, $password) {
         $output = false;
         try {
@@ -204,7 +203,5 @@ class accessor {
         }
         return $res;
     }   //update user password
-    
-    
     
 }
