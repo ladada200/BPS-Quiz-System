@@ -20,6 +20,7 @@ body {
 .header h1 {
 	color: #F2F2F2;
 	font-size: 600%;
+	margin: 0;
 }
 
 .main {
@@ -37,7 +38,6 @@ body {
 	margin-left: 20%;
 	margin-top: 10%;
 	margin-bottom: 20%;
-	padding: 2%;
 	background-color: #A61F2B;
 	font-family: "Lato";
 	color: #F2F2F2;
@@ -79,8 +79,13 @@ body {
 	text-align: center;
 	font-family: 'Abel';
 	padding: 2%;
+	margin 0%;
 }
 
 .center {
 	text-align: center;
+}
+
+.guest button {
+	overflow-wrap: break-word;
 }
