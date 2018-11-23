@@ -17,7 +17,7 @@ $tempX = [
     new QuizQuestions(12, new QuizQuestion(7, "Which one of these is not a variety of Swede? ", ["Bora", "Baron Solemacher", "Magres", "Marian"], 2), ["bora", "marian"]),
     new QuizQuestions(12, new QuizQuestion(8, "Which one of the following vegetables has the highest Potassium content? ", ["Turnip", "Potato", "Broccoli", "Carrot"], 3), ["turnip", "potato"]),
     new QuizQuestions(12, new QuizQuestion(9, "Which of these is the correct name for a type of peach?", ["Ulberta", "Ilberta", "Elberta", "Alberta "], 3), ["elberta", "peach"]),
-    new QuizQuestions(12, new QuizQuestion(10, "Which one of these berries is said to be good for women incurring uterine difficulties after a number of births?", [" Elderberry", "Gooseberry", "Blackberry", "Raspberry"], 2), ["elberta", "peach"]),
+    new QuizQuestions(12, new QuizQuestion(10, "Which one of these berries is said to be good for women incurring uterine difficulties after a number of births?", [" Elderberry", "Gooseberry", "Blackberry", "Raspberry"], 2), ["berry", "tastyberry"]),
 ];  //example code
 
 $var5 = new Quiz("testy", $tempX, ["CAT", "PUSSY", "HOT VAGINA", "STEVE'S ASSHOLE"]);  //example input
