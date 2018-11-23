@@ -8,7 +8,26 @@ $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
 if ($method === "POST") {
     //method to check if user can be authenticated
-    echo var_dump(checkUser($_POST['username'], $_POST['password']));
+    $body = file_get_contents('php://input');
+    $contents = json_decode($body, true);
+    //echo var_dump(checkUser($_POST['username'], $_POST['password']));
+    //echo var_dump($contents);
+    if ($contents['login'] == true) {
+        $temp = new userMethod($contents['username'], $contents['password'], NULL);
+        echo $temp->login();
+    } else if ($contents['createUser'] == true) {
+        $temp = new userMethod($contents['username'], $contents['password'], $contents['email']);
+        echo $temp->createUser();
+    } else if ($contents['deactivateUser'] == true) {
+        $temp = new userMethod($contents['username'], $contents['password'], null);
+        echo $temp->userActivation(false);
+    } else if ($contents['activateUser'] == true) {
+        $temp = new userMethod($contents['username'], $contents['password'], null);
+        echo $temp->userActivation(true);
+    } else {
+        echo $temp = "***ERROR***";
+    }
+    
 }
 
 class userMethod {
@@ -34,24 +53,22 @@ class userMethod {
     }
 
     public function confirmPassword() {
-        
+        $temp = new accessor();
+        return $temp->login($this->username, $this->password);
     }    
+    
     public function createUser() {
         $temp = new accessor();
-        return $temp->addUser($this->username, $this->password) ? "User Added to Database" : "Unable to add user!";
+        return $temp->addUser($this->username, $this->password) ? "User Added to Database" : "Unable to add user";
     }
+    
     public function updateUser() {
-        
-    }
-}
-
-function checkUser($uName, $pWord) {
-    $tempOut = NULL;
-    try {
         $temp = new accessor();
-        $tempOut = $temp->login($uName, $pWord);
-    } catch (Exception $ex) {
-        ChromePHP::log($uName . " DOES NOT EXIST IN DATABASE");
+        return $temp->updateUser($this->username, $this->password) ? "Updated User" : "Unable to update user";
     }
-    return $tempOut;
+    
+    public function userActivation($input) {
+        $temp = new accessor();
+        return $temp->userAccountStatus($this->username, $this->password, $input) ? "User schema changed" : "Could not alter user schema";
+    }
 }

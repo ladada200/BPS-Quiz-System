@@ -2,7 +2,7 @@
 
 /*
  * Author   :   Christopher Rupert
- * Version  :   1.0.1
+ * Version  :   1.0.2
  * Last     :   11/21/2018
  * Desc     :   Accessability document used for long-hand SQL Queries until SQL 
  *               are made and utilized.
@@ -16,9 +16,11 @@ class accessor {
     private $conn = "";
     private $salt = "4d494e497469676572";
     
-    private $loginStatementString = "SELECT UserName, Password, Permission FROM USER WHERE UserName = :username AND Password = :Password";
+    private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
     private $addUserStatementString = "INSERT INTO USER (UserName, Password) VALUES (:username, :password)";
     private $removeUserStatementString =  "DELETE FROM USER WHERE UserName = :username";
+    private $deactivateUserStatementString = "UPDATE USER SET active = false WHERE UserName=:username AND password=:password";
+    private $activateUserStatementString = "UPDATE USER SET active = true WHERE UserName=:username AND password=:password";
     private $updatePasswordStatementString = "UPDATE USER SET Password = :password WHERE UserName=:username";
     private $showAllUsersStatementString = "SELECT UserID, Username, Permission FROM USERS";
             
@@ -121,20 +123,28 @@ class accessor {
     
     public function login($username, $password) {
         $output = NULL;
+        $tempOut = NULL;
         try {
             $temp = $this->conn->prepare($this->loginStatementString);
             $temp->bindParam(":username", $username);
-            $temp->bindParam(":password", password_verify($password, $this->salt));
             $temp->execute();
         } catch (Exception $ex) {
-            echo $ex->getMessage();
+            $tempOut = $ex->getMessage();
         } finally {
             $temp->closeCursor();
             $output = $temp->fetchAll(PDO::FETCH_ASSOC);
         }
-        return $output;
+
+        try {
+            $tempOut = password_verify($password, $output->Password) ? $output->Permission : "guest";
+        } catch (Exception $ex) {
+            $tempOut = "ERROR: Could not verify User";
+        } finally {
+            $tempOut = $output;
+        }
+
+        return $tempOut;
     }   //Log in user
-    
     
     public function addUser($username, $password) {
         $output = false;
@@ -144,7 +154,7 @@ class accessor {
             $temp->bindParam(":password", password_hash($password, $salt));
             $temp->execute();
         } catch (Exception $ex) {
-            $output = "***ERROR: " . $ex->getMessage();
+            $output = false;
         } finally {
             $temp->closeCursor();
             $output = true;
@@ -171,11 +181,11 @@ class accessor {
             $temp = $this->conn->prepare($this->removeUserStatementString);
             $temp->bindParam(":username", $username);
             $temp->execute();
-        } catch (Exception $ex) {
-            $res = $ex->getMessage();
-        } finally {
-            $temp->closeCursor();
             $res = true;
+        } catch (Exception $ex) {
+            $res = false;
+        } finally {
+            $temp->closeCursor();       
         }
         return $res;
     }   //remove user from database
@@ -187,15 +197,28 @@ class accessor {
             $temp->bindParam(":username",$username);
             $temp->bindParam(":password",$password);
             $temp->execute();
-        } catch (Exception $ex) {
-            $res = $ex->getMessage();
-        } finally {
-            $temp->closeCursor();
             $res = true;
+        } catch (Exception $ex) {
+            $res = false;
+        } finally {
+            $temp->closeCursor();       
         }
         return $res;
     }   //update user password
     
-    
-    
+    public function userAccountStatus($username, $password, $tf) {
+        $res = false;
+        try {
+            $temp = $this->conn->prepare($tf ? $this->activateUserStatementString : $this->deactivateUserStatementString);
+            $temp->bindParam(":username",$username);
+            $temp->bindParam(":password", password_hash($password, $this->salt));
+            $temp->execute();
+            $res = true;
+        } catch (Exception $ex) {
+            $res = false;
+        } finally {
+            $temp->closeCursor();
+        }
+        return $res;
+    }
 }

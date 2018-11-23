@@ -8,7 +8,6 @@
 
 class QuizQuestions {
     private $quizID = 0;
-    private $tags = [];
     private $question = [];
     
     function __construct($quizID, $question, $tags) {
@@ -17,7 +16,7 @@ class QuizQuestions {
         $obj->question = $question->getQuestionText();
         $obj->choices = $question->getChoices();
         $obj->answer = $question->getAnswer();
-        array_push($this->tags, $tags);
+        $obj->tags = $tags;
         array_push($this->question, $obj);
 
     }
