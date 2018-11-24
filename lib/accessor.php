@@ -19,6 +19,8 @@ class accessor {
     private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
     private $addUserStatementString = "INSERT INTO USER (UserName, Password) VALUES (:username, :password)";
     private $removeUserStatementString =  "DELETE FROM USER WHERE UserName = :username";
+    private $deactivateUserStatementString = "UPDATE USER SET active = false WHERE UserName=:username AND password=:password";
+    private $activateUserStatementString = "UPDATE USER SET active = true WHERE UserName=:username AND password=:password";
     private $updatePasswordStatementString = "UPDATE USER SET Password = :password WHERE UserName=:username";
     private $showAllUsersStatementString = "SELECT UserID, Username, Permission FROM USERS";
             
@@ -144,7 +146,6 @@ class accessor {
         return $tempOut;
     }   //Log in user
     
-    
     public function addUser($username, $password) {
         $output = false;
         try {
@@ -153,7 +154,7 @@ class accessor {
             $temp->bindParam(":password", password_hash($password, $salt));
             $temp->execute();
         } catch (Exception $ex) {
-            $output = "***ERROR: " . $ex->getMessage();
+            $output = false;
         } finally {
             $temp->closeCursor();
             $output = true;
@@ -180,11 +181,11 @@ class accessor {
             $temp = $this->conn->prepare($this->removeUserStatementString);
             $temp->bindParam(":username", $username);
             $temp->execute();
-        } catch (Exception $ex) {
-            $res = $ex->getMessage();
-        } finally {
-            $temp->closeCursor();
             $res = true;
+        } catch (Exception $ex) {
+            $res = false;
+        } finally {
+            $temp->closeCursor();       
         }
         return $res;
     }   //remove user from database
@@ -196,15 +197,28 @@ class accessor {
             $temp->bindParam(":username",$username);
             $temp->bindParam(":password",$password);
             $temp->execute();
-        } catch (Exception $ex) {
-            $res = $ex->getMessage();
-        } finally {
-            $temp->closeCursor();
             $res = true;
+        } catch (Exception $ex) {
+            $res = false;
+        } finally {
+            $temp->closeCursor();       
         }
         return $res;
     }   //update user password
     
-    
-    
+    public function userAccountStatus($username, $password, $tf) {
+        $res = false;
+        try {
+            $temp = $this->conn->prepare($tf ? $this->activateUserStatementString : $this->deactivateUserStatementString);
+            $temp->bindParam(":username",$username);
+            $temp->bindParam(":password", password_hash($password, $this->salt));
+            $temp->execute();
+            $res = true;
+        } catch (Exception $ex) {
+            $res = false;
+        } finally {
+            $temp->closeCursor();
+        }
+        return $res;
+    }
 }

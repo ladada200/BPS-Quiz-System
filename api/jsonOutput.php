@@ -2,10 +2,10 @@
 
 // put your code here
 $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System'; //test
- require($projectRoot . '/lib/accessor.php');
- require($projectRoot . '/entity/Quiz.php');
- require($projectRoot . '/entity/QuizQuestion.php');
- require($projectRoot . '/entity/QuizQuestions.php');
+require($projectRoot . '/lib/accessor.php');
+require($projectRoot . '/entity/Quiz.php');
+require($projectRoot . '/entity/QuizQuestion.php');
+require($projectRoot . '/entity/QuizQuestions.php');
 
  $tempX = [
      new QuizQuestions(12,new QuizQuestion(0, "How big is Ron Jeremy's asshole?", ["HOUSE", "DOG", "FART", "WHISTLE"], 3), ["tag1","tag2","tag3","tag4"]),
@@ -14,7 +14,7 @@ $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
      new QuizQuestions(12,new QuizQuestion(0, "Who is phone?", ["HOUSE", "DOG"], 3), ["tag11","tag12","tag13","tag14"])
  ];  //example code
 
-$var5 = new Quiz("testy", $tempX, ["CAT","PUSSY","HOT VAGINA", "STEVE'S ASSHOLE"]);  //example input
+$var5 = new Quiz("testy", $tempX, ["CAT", "PUSSY", "HOT VAGINA", "STEVE'S ASSHOLE"]);  //example input
 /*
  * array_of_questions = [
  *   new QuizQuestions(quiz_number, new QuizQuestion(question_id, question_text, array_of_choices, answer), array_of_question_tags);
@@ -22,6 +22,7 @@ $var5 = new Quiz("testy", $tempX, ["CAT","PUSSY","HOT VAGINA", "STEVE'S ASSHOLE"
  * 
  * new Quiz(Quiz Title, array_of_questions, array_of_tags);
  */
+
 echo json_encode($var5, JSON_PRETTY_PRINT) . "\n"; //example output
 
  header("Content-Type: text/plain");

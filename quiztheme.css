@@ -74,12 +74,20 @@ body {
 	color: #1C1426;
 }
 
+ a {
+	color: #1C1426;
+}
+
+a:hover {
+	color: #1C1426;
+}
+
 .footer {
 	background-color:#B4B8B8;
 	text-align: center;
 	font-family: 'Abel';
 	padding: 2%;
-	margin 0%;
+	margin: 0%;
 }
 
 .center {
