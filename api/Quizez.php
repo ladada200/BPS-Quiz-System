@@ -22,7 +22,6 @@ $tempX = [
 ];  //example code
 
 //art
-//more quizez
 $tempX2 = [
     new QuizQuestions(11, new QuizQuestion(1, "The Naked Maja was a work produced by which artist?", ["Renoir", "Rembrandt", "Goya", "Delacroix"], 3), ["artist", "goya"]),
     new QuizQuestions(11, new QuizQuestion(2, "The Pitti Palace is located in which European City? ", ["Florence", "Naples", "Rome", "Madrid"], 1), ["florence", "naples", "artsy"]),
@@ -37,7 +36,6 @@ $tempX2 = [
 ];  //example code
 
 //anatomy
-//more quizez
 $tempX3 = [
     new QuizQuestions(10, new QuizQuestion(1, "The illium can be found in what part of the body?", ["Pelvis", "Thorax", "Chest", " Stomach"], 1), ["body", "anatomy"]),
     new QuizQuestions(10, new QuizQuestion(2, "The Internal Oblique Muscle lies in which part of the human body?", ["Back", "Legs", "Skull", "Chest"], 1), ["oblique", "back", "chest"]),
@@ -52,7 +50,6 @@ $tempX3 = [
 ];  //example code
 
 //solar system
-//more quizez
 $tempX4 = [
     new QuizQuestions(14, new QuizQuestion(1, "Rosalind is a moon that orbits which planet? ", ["Uranus", "Earth", "Mercury", "Mars"], 1), ["uranus", "mars"]),
     new QuizQuestions(14, new QuizQuestion(2, "Seething Bay is located on which body of the Solar System?", ["Mars", "Earth", "The Moon", "The Sun"], 3), ["moon", "sun", "planets"]),
@@ -95,7 +92,7 @@ $tempX6 = [
     new QuizQuestions(16, new QuizQuestion(10, "Who was the first player from outside the British Isles to captain a European Ryder Cup Team?", ["Sergo Garcia","Bernhard Langer", "Jose Maria Olazabal", "Benedict", "Seve Ballesteros"], 4), ["sergo", "maria"])
 ];  //example code
 
-//golf
+//50s music
 $tempX7 = [
     new QuizQuestions(17, new QuizQuestion(1, "The Big O was the nickname given to which star?", ["Ritchie Valens", "Roy Orbison", "Bobby Darin", "Huey Smith"], 2), ["smith", "valens"]),
     new QuizQuestions(17, new QuizQuestion(2, "The Chicken and The Hawk and Flip, Flop and Fly were hits for which singer?", ["Bo Diddley", "Sam Cooke", "Hank Ballad", "Big Joe Turner"], 4), ["turner", "diddley", "cooke"]),
@@ -106,7 +103,21 @@ $tempX7 = [
     new QuizQuestions(17, new QuizQuestion(7, "The Killer was the nickname of which 1950s star? ", ["Buddy Holly", "Bill Haley", "Billy Ward", "Jerry Lee Lewis"], 4), ["lewis", "ward"]),
     new QuizQuestions(17, new QuizQuestion(8, "The King of Rockabilly was a nickname given to whom?", ["Johnny Cash", "Jerry Lee Lewis", "Carl Perkins", "Eddie Cochran"], 3), ["jerry", "carl perkins"]),
     new QuizQuestions(17, new QuizQuestion(9, "The Originator is a nickname often given to whom?", ["Bo Diddley", "Johnny Cash", "Gene Vincent", "Carl Perkins"], 1), ["jonny cash", "bo diddley"]),
-    new QuizQuestions(17, new QuizQuestion(10, "The Shrine of St Cecilia was a major hit for whom?  The Del Vikings", ["The Penguins","The Harp Tones", "The Clowns,", " The Del Vikings",], 2), ["vikings", "harp tones"])
+    new QuizQuestions(17, new QuizQuestion(10, "The Shrine of St Cecilia was a major hit for whom?", ["The Penguins","The Harp Tones", "The Clowns", " The Del Vikings",], 2), ["vikings", "harp tones"])
+];  //example code
+
+//90s music
+$tempX8 = [
+    new QuizQuestions(18, new QuizQuestion(1, "In what year did Bryan Adams hit the top of the charts with “Everything I Do”? ", ["1991", "1994", "1996", "1998"], 1), ["top charts", "bryan adams"]),
+    new QuizQuestions(18, new QuizQuestion(2, "In what year did Hanson achieve fame with the song “Mmmbop”?", [" 1997", "1990", "1995", "1992"], 1), ["fame", "song", "hanson"]),
+    new QuizQuestions(18, new QuizQuestion(3, "In what year did Madonna release Vouge? ", ["1999", "1993", "1996", "1990"], 4), ["madonna", "vouge"]),
+    new QuizQuestions(18, new QuizQuestion(4, "In what year did Michael Bolton have a No. 1 hit with “Tell me How am I Supposed to Live Without You”?", ["1990", "1996", "1994,"], 1), ["bolton", "number 1 hit"]),
+    new QuizQuestions(18, new QuizQuestion(5, "In what year did R Kelly have a worldwide hit with “I Believe I Can Fly”?", ["1990", "1997", "1999", "1993"], 2), ["worldwide", "i can fly", "glory"]),
+    new QuizQuestions(18, new QuizQuestion(6, "In what year did Shawn Colvin win the Grammy for Record of the Year? ", ["1995", "1997", "1991", "1993"], 4), ["shawn colvin", "record of the year", "grammy"]),
+    new QuizQuestions(18, new QuizQuestion(7, "In what year did Toni Braxton hit the top of the charts with “You’re Making Me High”?", ["1992", "1998", "1994", "1996"], 4), ["top charts", "toni braxton"]),
+    new QuizQuestions(18, new QuizQuestion(8, "In what year did Toni Braxton release Unbreak My Heart?", ["1999", "1993", "1997", "1995"], 3), ["toni braxton", "unbreak my heart"]),
+    new QuizQuestions(18, new QuizQuestion(9, "In what year did Vanilla Ice release Ice Ice Baby?", ["1997", "1995", "1990", "1993"], 2), ["ice ice baby", "vanilla"]),
+    new QuizQuestions(18, new QuizQuestion(10, "In which year did “Smooth” by Santana win the Grammy for Record of The Year?", ["1996","1999", "1990", "1993",], 2), ["grammys", "smooth"])
 ];  //example code
 
 
