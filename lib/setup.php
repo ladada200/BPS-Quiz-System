@@ -8,7 +8,7 @@
 
 class setup {
     const host = "localhost";
-    const dbName = "BPSDB";
+    const dbName = "quizdb";
     const UName = "temp1234";
     const PWord = "Haha1Win";
     

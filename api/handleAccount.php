@@ -11,7 +11,7 @@ if ($method == "login") {
     $body = file_get_contents('php://input');
     $contents = json_decode($body, true);
     $temp = new userMethod($contents['username'], $contents['password'], NULL);
-    echo $temp->login() ? true : false;
+    echo json_encode($temp->login());
     
 } else if ($method == "createUser") {
     
@@ -89,4 +89,10 @@ class userMethod {
         $temp = new accessor();
         return $temp->userAccountStatus($this->username, $this->password, $input) ? "User schema changed" : "Could not alter user schema";
     }
+    
+    public function login() {
+        $temp = new accessor();
+        return $temp->login($this->username, $this->password);
+    }
+    
 }
