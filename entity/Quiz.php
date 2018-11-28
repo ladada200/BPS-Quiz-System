@@ -34,3 +34,5 @@ class Quiz implements JsonSerializable {
     
     
 }
+
+header("location: ../");

@@ -39,3 +39,4 @@ class QuizQuestion {
 
 
 }
+header("location: ../");
