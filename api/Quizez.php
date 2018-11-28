@@ -103,7 +103,7 @@ $tempX7 = [
     new QuizQuestions(17, new QuizQuestion(7, "The Killer was the nickname of which 1950s star? ", ["Buddy Holly", "Bill Haley", "Billy Ward", "Jerry Lee Lewis"], 4), ["lewis", "ward"]),
     new QuizQuestions(17, new QuizQuestion(8, "The King of Rockabilly was a nickname given to whom?", ["Johnny Cash", "Jerry Lee Lewis", "Carl Perkins", "Eddie Cochran"], 3), ["jerry", "carl perkins"]),
     new QuizQuestions(17, new QuizQuestion(9, "The Originator is a nickname often given to whom?", ["Bo Diddley", "Johnny Cash", "Gene Vincent", "Carl Perkins"], 1), ["jonny cash", "bo diddley"]),
-    new QuizQuestions(17, new QuizQuestion(10, "The Shrine of St Cecilia was a major hit for whom?", ["The Penguins","The Harp Tones", "The Clowns", " The Del Vikings",], 2), ["vikings", "harp tones"])
+    new QuizQuestions(17, new QuizQuestion(10, "The Shrine of St Cecilia was a major hit for whom?", ["The Penguins","The Harp Tones", "The Clowns", " The Del Vikings"], 2), ["vikings", "harp tones"])
 ];  //example code
 
 //90s music
@@ -117,7 +117,21 @@ $tempX8 = [
     new QuizQuestions(18, new QuizQuestion(7, "In what year did Toni Braxton hit the top of the charts with “You’re Making Me High”?", ["1992", "1998", "1994", "1996"], 4), ["top charts", "toni braxton"]),
     new QuizQuestions(18, new QuizQuestion(8, "In what year did Toni Braxton release Unbreak My Heart?", ["1999", "1993", "1997", "1995"], 3), ["toni braxton", "unbreak my heart"]),
     new QuizQuestions(18, new QuizQuestion(9, "In what year did Vanilla Ice release Ice Ice Baby?", ["1997", "1995", "1990", "1993"], 2), ["ice ice baby", "vanilla"]),
-    new QuizQuestions(18, new QuizQuestion(10, "In which year did “Smooth” by Santana win the Grammy for Record of The Year?", ["1996","1999", "1990", "1993",], 2), ["grammys", "smooth"])
+    new QuizQuestions(18, new QuizQuestion(10, "In which year did “Smooth” by Santana win the Grammy for Record of The Year?", ["1996","1999", "1990", "1993"], 2), ["grammys", "smooth"])
+];  //example code
+
+// art 20-21stC 
+$tempX8 = [
+    new QuizQuestions(19, new QuizQuestion(1, "Nighthawks was the most famous work by which artist?", ["Manet", "Hopper", "Monet", "Beckman"], 2), ["manet", "hopper"]),
+    new QuizQuestions(19, new QuizQuestion(2, "Nightime, Enigma and Nostalgia was a 1930’s series by whom?", ["Yves Klein", "Jeff Koons", "Roy Lichtenstein", "Asrhile Gorky"], 4), ["gorky", "roy", "jeff"]),
+    new QuizQuestions(19, new QuizQuestion(3, "NKV (New Artists Association of Munich founded)?", ["1909", "1990", "1939", "1959"], 4), ["1909", "nkv"]),
+    new QuizQuestions(19, new QuizQuestion(4, "No 61 (Rust and Blue) is a work by whom?", ["Paul Klee", "Jackson Pollock", "Mark Rothko"], 3), ["mark rothko", "paul klee"]),
+    new QuizQuestions(19, new QuizQuestion(5, "Noah Carneys Novel “The Art Thief” concerns works by which artist?", ["Kazimir Malevich", "Robert Rauschenberg", "Constantin Brancusi", "Francis Bacon"], 1), ["malevich", "brancusi", "francis bacon"]),
+    new QuizQuestions(19, new QuizQuestion(6, "Nude Sitting on a Diva is a key work by whom?", ["Yves Klein", "Asrhile Gorky", "Amedeo Modigliani", "Jeff Koons"], 3), ["amedeo", "gorky", "koons"]),
+    new QuizQuestions(19, new QuizQuestion(7, "Ocean Grayness is a major work by which 20th Century Artist?", ["Jackson Pollock", "Andy Warhol", "Man Ray", "Marcel Duchamp"], 1), ["andy", "duchamp"]),
+    new QuizQuestions(19, new QuizQuestion(8, "Of whom did Picasso state “He will be the only painter left who understands what colour is”?", ["Hopper", "Chagall", "Monet", "Manet"], 2), ["hopper", "chagall"]),
+    new QuizQuestions(19, new QuizQuestion(9, "Orange, Red and Yellow is a 1961 work by whom?", ["Jackson Pollock", "Martin Kippenberger", "Paul Klee", "Mark Rothko"], 4), ["1961", "martin"]),
+    new QuizQuestions(19, new QuizQuestion(10, "Pablo Picasso belonged to which school of Art?", ["Cubist","Mannerist", "Action Painting", "Impressionist"], 1), ["cubis", "action"])
 ];  //example code
 
 
