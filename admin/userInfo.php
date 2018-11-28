@@ -8,7 +8,7 @@
 
 $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
 require_once ($projectRoot . '/utils/ChromePhp.php');
-require_once ($projectRoot . '/lib/accessor.php');
+require_once ($projectRoot . '/lib/accessor.php');  //output
 require_once ($projectRoot . '/entity/user.php');   //cats
 
 $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
