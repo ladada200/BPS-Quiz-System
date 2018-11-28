@@ -6,28 +6,46 @@ require_once ($projectRoot . '/lib/accessor.php');
 
 $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
-if ($method === "POST") {
-    //method to check if user can be authenticated
+if ($method == "login") {
+    
     $body = file_get_contents('php://input');
     $contents = json_decode($body, true);
-    //echo var_dump(checkUser($_POST['username'], $_POST['password']));
-    //echo var_dump($contents);
-    if ($contents['login'] == true) {
-        $temp = new userMethod($contents['username'], $contents['password'], NULL);
-        echo $temp->login();
-    } else if ($contents['createUser'] == true) {
-        $temp = new userMethod($contents['username'], $contents['password'], $contents['email']);
-        echo $temp->createUser();
-    } else if ($contents['deactivateUser'] == true) {
-        $temp = new userMethod($contents['username'], $contents['password'], null);
-        echo $temp->userActivation(false);
-    } else if ($contents['activateUser'] == true) {
-        $temp = new userMethod($contents['username'], $contents['password'], null);
-        echo $temp->userActivation(true);
-    } else {
-        echo $temp = "***ERROR***";
-    }
+    $temp = new userMethod($contents['username'], $contents['password'], NULL);
+    echo json_encode($temp->login());
     
+} else if ($method == "createUser") {
+    
+    $body = file_get_contents('php://input');
+    $contents = json_decode($body, true);
+    $temp = new userMethod($contents['username'], $contents['password'], $contents['email']);
+    echo $temp->createUser();
+    
+} else if ($method == "deactivateUser") {
+    
+    $body = file_get_contents('php://input');
+    $contents = json_decode($body, true);
+    $temp = new userMethod($contents['username'], $contents['password'], null);
+    echo $temp->userActivation(false);
+    
+} else if ($method == "activateUser") {
+    
+    $body = file_get_contents('php://input');
+    $contents = json_decode($body, true);
+    $temp = new userMethod($contents['username'], $contents['password'], null);
+    echo $temp->userActivation(true);
+    
+} else if ($method === "tempUser") {
+    
+    $user = new \stdClass();
+    $user->userID = 12227;
+    $user->userName = "122227user";
+    $user->password = "test";
+    $user->email = "do-not-reply@fake.com";
+    $user->permission = "user";
+    echo json_encode($user, true);
+
+} else {
+    echo "***ERROR***" . $method . " not available!";
 }
 
 class userMethod {
@@ -71,4 +89,10 @@ class userMethod {
         $temp = new accessor();
         return $temp->userAccountStatus($this->username, $this->password, $input) ? "User schema changed" : "Could not alter user schema";
     }
+    
+    public function login() {
+        $temp = new accessor();
+        return $temp->login($this->username, $this->password);
+    }
+    
 }

@@ -11,61 +11,49 @@
         <link href="https://fonts.googleapis.com/css?family=Alegreya Sans SC" rel="stylesheet">
         <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="quiztheme.css" type="text/css">
+        <script src="js/authenticate.js" type="text/javascript"></script>
     </head>
-
-<body>
-<div class="row header">
-        <h1>Bass Pro Shoppe Quiz App</h1>
-		  <h3>Fish for some learning!</h3>
-      </div>
-<div class="container-fluid quizcontainer">
-	      
-      <div class="row">
-  <div class="row">
-	      <div class="col-sm-2"></div>
-    <div class="col-sm-8 main">
-
-        <div class="login jumbotron">
-		<div class="row center">
-          <form class="form-signin">
-            <h2 class="form-signin-heading">Log In</h2>
-			  Don't have an account? <a href="createAccount.html" target="_blank">Create One</a>
-			</div>
-			
-			<div class="row">
-            <div class="col-sm-2">
-            </div>
-            <div class="col-sm-8">
-             
-             <h4>Username</h4> <input type="text" id="inputEmail" class="form-control" required autofocus>
-				              <h4>Password</h4><input type="password" id="inputPassword" class="form-control" required>
-				<br>
-				
-            </div>
-			<div class="col-sm-2">
-            </div>
-			 </div> 
-			  
-			  
-            <div class="row">
-              <div class="col-sm-3"></div>
-              <div class="col-sm-6">
-				  <br>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-				
-				  <button class="btn btn-lg btn-primary btn-block guest" type="submit">Continue as a Guest</button>
-              </div>
-				<div class="col-sm-3"></div>
-            </div>
-          </form>
+    <body>
+        <div class="row header">
+            <h1>Bass Pro Shoppe Quiz App</h1>
+            <h3>Fish for some learning!</h3>
         </div>
-      </div>
-    </div>
-    	      <div class="row footer">
-        Created by Coffee Fueled Enterprises. 
-      </div>
-      <div class="row">
-  </div>
-</div>
-</body>
+        <div class="container-fluid quizcontainer">
+        <div class="row">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8 main">
+                    <div class="login jumbotron">
+                        <div class="row center">
+                            <form class="form-signin" id="login">
+                                <h2 class="form-signin-heading">Log In</h2>
+                                Don't have an account? <a href="createAccount.html" target="_blank">Create One</a>
+                                <div class="row">
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-8">
+                                    <h4>Username</h4> <input type="text" id="inputUsername" class="form-control" required autofocus>
+                                    <h4>Password</h4><input type="password" id="inputPassword" class="form-control" required autocomplete="password">
+                                    <br />
+                                </div>
+                                <div class="col-sm-2"></div> 
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-6">
+                                        <br/>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnLogin">Log in</button>
+                                        <button class="btn btn-lg btn-primary btn-block guest" type="submit" id="btnContinueAsGuest">Continue as a Guest</button>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer">
+            Created by Coffee Fueled Enterprises. 
+        </div>
+        <div class="row"></div>
+    </body>
 </html>

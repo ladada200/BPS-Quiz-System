@@ -122,7 +122,9 @@ class accessor {
     }   //search quiz by question id, tags, words in title, etc.
     
     public function login($username, $password) {
-        $output = NULL;
+        $output = new \stdClass();
+        $output->password = "";
+        $output->Permission = "";
         $tempOut = NULL;
         try {
             $temp = $this->conn->prepare($this->loginStatementString);
@@ -132,17 +134,15 @@ class accessor {
             $tempOut = $ex->getMessage();
         } finally {
             $temp->closeCursor();
-            $output = $temp->fetchAll(PDO::FETCH_ASSOC);
+            $temp->fetchAll(PDO::FETCH_ASSOC);
         }
 
         try {
-            $tempOut = password_verify($password, $output->Password) ? $output->Permission : "guest";
+            $tempOut = password_verify($password, $output->password) ? $output->Permission : false;
         } catch (Exception $ex) {
-            $tempOut = "ERROR: Could not verify User";
-        } finally {
-            $tempOut = $output;
-        }
-
+            $tempOut = "ERROR: Exception occured!";
+        } 
+        
         return $tempOut;
     }   //Log in user
     
