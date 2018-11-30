@@ -121,7 +121,7 @@ $tempX8 = [
 ];  //example code
 
 // art 20-21stC 
-$tempX8 = [
+$tempX9 = [
     new QuizQuestions(19, new QuizQuestion(1, "Nighthawks was the most famous work by which artist?", ["Manet", "Hopper", "Monet", "Beckman"], 2), ["manet", "hopper"]),
     new QuizQuestions(19, new QuizQuestion(2, "Nightime, Enigma and Nostalgia was a 1930’s series by whom?", ["Yves Klein", "Jeff Koons", "Roy Lichtenstein", "Asrhile Gorky"], 4), ["gorky", "roy", "jeff"]),
     new QuizQuestions(19, new QuizQuestion(3, "NKV (New Artists Association of Munich founded)?", ["1909", "1990", "1939", "1959"], 4), ["1909", "nkv"]),
@@ -132,6 +132,20 @@ $tempX8 = [
     new QuizQuestions(19, new QuizQuestion(8, "Of whom did Picasso state “He will be the only painter left who understands what colour is”?", ["Hopper", "Chagall", "Monet", "Manet"], 2), ["hopper", "chagall"]),
     new QuizQuestions(19, new QuizQuestion(9, "Orange, Red and Yellow is a 1961 work by whom?", ["Jackson Pollock", "Martin Kippenberger", "Paul Klee", "Mark Rothko"], 4), ["1961", "martin"]),
     new QuizQuestions(19, new QuizQuestion(10, "Pablo Picasso belonged to which school of Art?", ["Cubist","Mannerist", "Action Painting", "Impressionist"], 1), ["cubis", "action"])
+];  //example code
+
+// art 20-21stC 
+$tempX10 = [
+    new QuizQuestions(20, new QuizQuestion(1, "PVG is the airport code for the main airport in which Asian City?", ["Seoul", "Tokyo", "Beijing", "Shanghai"], 4), ["seoul", "tokyo"]),
+    new QuizQuestions(20, new QuizQuestion(2, "Richard Branson founded which major airline? Southwest", ["Quantas", "Airlines", "Virgin", "Emirates"], 3), ["airlines", "emirates", "virgin"]),
+    new QuizQuestions(20, new QuizQuestion(3, "Rollin King is the founder of which major airline?", ["Quantas", "Virgin", "Southwest Airlines", "Emirates"], 3), ["quantas", "virgin"]),
+    new QuizQuestions(20, new QuizQuestion(4, "Royal Air Maroc is the national Airline of which African country? ", ["Morocco", " Nigeria", "South Africa"], 1), ["south africa", "tunica"]),
+    new QuizQuestions(20, new QuizQuestion(5, "RyanAir is an airline from which nation?", ["Wales", "Scotland", "England", "Ireland"], 4), ["wales", "scotland", "ireland"]),
+    new QuizQuestions(20, new QuizQuestion(6, "Sabena is an airline from which nation?", ["France", "Belgium", "Netherlands", "Germany"], 2), ["belgium", "germany", "belgium"]),
+    new QuizQuestions(20, new QuizQuestion(7, "Sansa is an airline from which nation?", ["Spain", "England", "France", "Costa Rica"], 4), ["england", "france"]),
+    new QuizQuestions(20, new QuizQuestion(8, "Saudi Arabian Airlines has their base at an airport in which city?", ["Beddah", "Jeddah", "Teddah", "Feddah"], 2), ["jeddah", "feddah"]),
+    new QuizQuestions(20, new QuizQuestion(9, "Schiphol Airport lies in which European Capital?", ["Berne", "Paris", "Brussels", "Amsterdam"], 4), ["amsterdam", "berne"]),
+    new QuizQuestions(20, new QuizQuestion(10, "SHA is the airport code for an airport in which city?", ["Amsterdam","Shanghai", "Chicago", "Hanover"], 2), ["amsterdam", "chicago"])
 ];  //example code
 
 

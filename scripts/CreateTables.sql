@@ -25,7 +25,7 @@ create table QuizQuestions
     quizID varchar(40) not null ,
     questionID varchar(10) not null ,
     tags varchar(500) not null,
-	primary key (quizID),
+	primary key (questionID),
 	foreign key (quizID) references quiz(quizID) on delete cascade,
     foreign key (questionID) references question(questionID) on delete cascade
 );
