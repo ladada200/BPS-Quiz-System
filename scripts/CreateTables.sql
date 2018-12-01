@@ -8,13 +8,13 @@ create table Quiz
 	quizID varchar(10) not null ,
 	quizTitle varchar(20) not null,
     tags varchar(500) not null,
+    author varchar(200) not null,
 	primary key (quizID)
 );
 
 create table Question
 (
     questionID varchar(10) not null ,
-    question varchar(500) not null ,
     choices varchar(5000) not null,
     answer varchar(100) not null,
 	primary key (questionID)
@@ -24,6 +24,7 @@ create table QuizQuestions
 (
     quizID varchar(40) not null ,
     questionID varchar(10) not null ,
+question varchar(500) not null,
     tags varchar(500) not null,
 	primary key (questionID),
 	foreign key (quizID) references quiz(quizID) on delete cascade,
@@ -43,6 +44,8 @@ create table Users
     userName varchar(50) not null ,
     password varchar(50) not null ,
     permissionLevel varchar(10) not null ,
+    status varchar(50) not null,
+    email varchar(200) not null,
 	primary key (userID),
 	foreign key (permissionLevel) references Permission (permission) on delete cascade
 );
