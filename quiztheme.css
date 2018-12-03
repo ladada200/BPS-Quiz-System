@@ -49,6 +49,9 @@ body {
 	text-align: center;
 }
 
+.login h3 {
+	text-align: center;
+}
 
 .login button {
 	
@@ -97,4 +100,77 @@ a:hover {
 
 .guest button {
 	overflow-wrap: break-word;
+}
+
+.popularQuiz {
+	text-align: left;
+	font-size: 150%;
+}
+
+.showQuizzes {
+		overflow: scroll;
+	overflow-x: hidden;
+	width: 100%;
+	height: 200px;
+}
+
+#style-3::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
+
+.searchResults {
+	color: #1C1426;
+	display: inline;
+	padding: 50%;
+	overflow: scroll;
+	width: 80%;
+}
+
+.searchResults h2 {
+	color:#F2F2F2;
+}
+
+.searchResults h4 {
+	color:#F2F2F2;
+}
+
+.searchQuiz {
+	color: #1C1426;
+	display: inline;
+	padding: 50%;
+	overflow: scroll;
+	width: 80%;
+}
+
+.searchQuiz h2 {
+	color:#F2F2F2;
+}
+
+.searchQuiz h4 {
+	color:#F2F2F2;
+}
+
+.user {
+	font-weight: bold;
+}
+
+.black {
+	background-color: black;
+}
+
+.grey {
+	background-color: darkgray;
 }
