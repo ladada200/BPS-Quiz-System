@@ -183,3 +183,37 @@ a:hover {
 .grey {
 	background-color: darkgray;
 }
+
+.password {
+	padding-bottom: 5%;
+}
+
+.password h3 {
+	text-align: left;
+}
+
+.delete {
+	padding-bottom: 5%;
+}
+
+.delete h3 {
+	
+	text-align: left;
+	padding-left: 1%;
+	
+}
+
+.createUser {
+	padding-bottom: 5%;
+}
+
+.createQuestion h3 {
+	
+	text-align: left;
+	padding-left: 1%;
+	
+}
+
+.createQuestion {
+	padding-bottom: 1%;
+}
