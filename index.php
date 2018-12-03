@@ -19,30 +19,28 @@ and open the template in the editor.
             e.preventDefault();
             try {
                 var allInputs = document.querySelectorAll("input");
-                allInputs.forEach((item)=>{
+                allInputs.forEach(function (item) {
                    if (item.value == null || item.value.length == 0 || item.value == "") {
                        throw "***ERROR***";
                    } 
                 });
                 var obj = {
-                    username: allInputs[0],
-                    password: allInputs[1],
-                    email: allInputs[2]
+                    "username": allInputs[0].value,
+                    "password": allInputs[1].value,
+                    "email": allInputs[2].value
                 }
                 var url = "account/";
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = () => {
                     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                        var resp = this.responseText;
-                        console.log(resp);
+                        console.log(xmlhttp.responseText);
                     }
                 };
                 xmlhttp.open("POST", url, true);
                 xmlhttp.send(JSON.stringify(obj));
             } catch (ex) {
                 console.log(ex);
-            }
-   
+            }   
         }
         
         </script>
@@ -51,7 +49,7 @@ and open the template in the editor.
         <form method="POST">
             <div>
                 <div>Username: <input type="text" id="username" required></div>
-                <div>Password: <input type="password" id="password" required></div>
+                <div>Password: <input type="password" id="password" required aria-complete="list" aria-autocomplete="list"></div>
                 <div>Email: <input type="email" id="email" required></div>
                 <div><button id="btnSubmit">Submit</button></div>
             </div>

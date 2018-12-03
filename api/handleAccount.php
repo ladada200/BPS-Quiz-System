@@ -7,7 +7,6 @@ require_once ($projectRoot . '/lib/accessor.php');
 $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
 
-
 if ($method == "login") {
 
     $body = file_get_contents('php://input');
@@ -15,9 +14,7 @@ if ($method == "login") {
     $temp = new userMethod($contents['username'], $contents['password'], NULL);
     echo json_encode($temp->login());    
 
-} 
-
-if ($method == "POST") { 
+} else if ($method == "POST") { 
     
     $filters = array (
         "username" => array
@@ -30,9 +27,9 @@ if ($method == "POST") {
           (
           "filter"=>FILTER_SANITIZE_SPECIAL_CHARS,
           ),
-        "email"=> FILTER_VALIDATE_EMAIL,
+        "email"=> FILTER_VALIDATE_EMAIL
         );
-    
+
     $contents = filter_input_array(INPUT_POST, $filters);
     
     $temp = new userMethod($contents['username'], $contents['password'], $contents['email']);
@@ -95,7 +92,7 @@ class userMethod {
     
     public function createUser() {
         $temp = new accessor();
-        return $temp->addUser($this->username, $this->password) ? "User Added to Database" : "Unable to add user";
+        return $temp->addUser($this->username, $this->password, $this->email);
     }
     
     public function updateUser() {
