@@ -15,3 +15,4 @@ RewriteRule "\.exe" "-" [F]
 #rewrite rules
 RewriteRule ^results/?username=(\w{16})$ entity/quizResults.php?uName=$1 [NC]
 RewriteRule ^account/$ api/handleAccount.php [NC]
+#RewriteRule ^memoryTemp/$ api/handleAccount.php [NC]

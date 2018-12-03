@@ -10,7 +10,7 @@ class Quiz implements JsonSerializable {
     private $quizID = 0;
     private $quizTitle = "";
     private $quizQuestions = [];
-    private $tags = []; //test
+    private $tags = [];
     
     function __construct($quizTitle, $input, $tags) {
         $this->quizTitle = $quizTitle;

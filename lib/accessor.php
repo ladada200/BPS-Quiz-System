@@ -14,14 +14,14 @@ require_once ($projectRoot . '/lib/ConnectionManager.php');
 
 class accessor {
     private $conn = "";
-    private $salt = "4d494e497469676572";
+    private $salt = "4d494e497469676572ab4x";
     
     private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
-    private $addUserStatementString = "INSERT INTO USER (UserName, Password) VALUES (:username, :password)";
-    private $removeUserStatementString =  "DELETE FROM USER WHERE UserName = :username";
-    private $deactivateUserStatementString = "UPDATE USER SET active = false WHERE UserName=:username AND password=:password";
-    private $activateUserStatementString = "UPDATE USER SET active = true WHERE UserName=:username AND password=:password";
-    private $updatePasswordStatementString = "UPDATE USER SET Password = :password WHERE UserName=:username";
+    private $addUserStatementString = "INSERT INTO USERS (UserName, Password, Email) VALUES (:username, :password, :email)";
+    private $removeUserStatementString =  "DELETE FROM USERS WHERE UserName = :username";
+    private $deactivateUserStatementString = "UPDATE USERS SET active = false WHERE UserName=:username AND password=:password";
+    private $activateUserStatementString = "UPDATE USERS SET active = true WHERE UserName=:username AND password=:password";
+    private $updatePasswordStatementString = "UPDATE USERS SET Password = :password WHERE UserName=:username";
     private $showAllUsersStatementString = "SELECT UserID, Username, Permission FROM USERS";
             
     private $searchQuizByIdStatementString = "SELECT * FROM Quiz WHERE ID=:bindParam";
@@ -146,18 +146,23 @@ class accessor {
         return $tempOut;
     }   //Log in user
     
-    public function addUser($username, $password) {
+    public function addUser($username, $password, $email) {
         $output = false;
+        $options = [
+          'salt' => $this->salt  
+        ];
         try {
             $temp = $this->conn->prepare($this->addUserStatementString);
             $temp->bindParam(":username", $username);
-            $temp->bindParam(":password", password_hash($password, $salt));
+            $temp->bindParam(":email", $email);
+            $temp->bindParam(":password", password_hash($password, PASSWORD_BCRYPT, $options));
             $temp->execute();
+            $output = true;
         } catch (Exception $ex) {
-            $output = false;
+            $output = $ex->getMessage();
         } finally {
             $temp->closeCursor();
-            $output = true;
+            
         }
         return $output;
     }   //Create new user
