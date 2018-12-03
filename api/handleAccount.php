@@ -6,17 +6,35 @@ require_once ($projectRoot . '/lib/accessor.php');
 
 $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
+
+
 if ($method == "login") {
-    
+
     $body = file_get_contents('php://input');
     $contents = json_decode($body, true);
     $temp = new userMethod($contents['username'], $contents['password'], NULL);
-    echo json_encode($temp->login());
+    echo json_encode($temp->login());    
+
+} 
+
+if ($method == "POST") { 
     
-} else if ($method == "createUser") {
+    $filters = array (
+        "username" => array
+          (
+          "filter"=>FILTER_CALLBACK,
+          "flags"=>FILTER_FORCE_ARRAY,
+          "options"=>"ucwords"
+          ),
+        "password" => array
+          (
+          "filter"=>FILTER_SANITIZE_SPECIAL_CHARS,
+          ),
+        "email"=> FILTER_VALIDATE_EMAIL,
+        );
     
-    $body = file_get_contents('php://input');
-    $contents = json_decode($body, true);
+    $contents = filter_input_array(INPUT_POST, $filters);
+    
     $temp = new userMethod($contents['username'], $contents['password'], $contents['email']);
     echo $temp->createUser();
     
