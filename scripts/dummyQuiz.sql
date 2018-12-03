@@ -20,7 +20,7 @@ insert into QuizQuestions values(111,127,"How many girls has Ethan kissed?","gir
 insert into QuizQuestions values(111,128, "How old is Phil?","phil,age");
 insert into QuizQuestions values(111,129,"How beautiful is Ashley?(1-10)","beautiful,awesome");
 insert into QuizQuestions values(111,130,"How many buses Jacob ridden before?","bus,transportation");
-insert into QuizQuestions values(111,131,"How many drinks are we having after this term?", ,"drinks,endofterm");
+insert into QuizQuestions values(111,131,"How many drinks are we having after this term?","drinks,endofterm");
 insert into QuizQuestions values(111,132,"How awesome is this quiz?","quiz,awesome");
 
 insert into Permission values(444, "admin");
