@@ -163,6 +163,15 @@ a:hover {
 	color:#F2F2F2;
 }
 
+.toTheLeft {
+    display: inline;
+    float: left;
+}
+
+.toTheRight {
+    display: inline;
+}
+
 .user {
 	font-weight: bold;
 }
