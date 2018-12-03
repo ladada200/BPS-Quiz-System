@@ -39,6 +39,7 @@ create table Permission
 );
 
 create table Users
+
 (
     userID varchar(10) not null ,
     userName varchar(50) not null ,
