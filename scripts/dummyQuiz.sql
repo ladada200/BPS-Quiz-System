@@ -1,5 +1,6 @@
+use quizdb;
  
-insert into Quiz values("55ab", "Where is Zach's dad?", "dad") ;
+insert into Quiz values("55ab", "Where is Zach's dad?", "dad", "dummy") ;
 
 insert into Question values(123, "Where is Zach's dad?", "Not here,California,Moncton,Alaska", 1);
 insert into Question values(124, "How big are Kyle's biceps? (inches)", "-10,25,32,0", 3);
