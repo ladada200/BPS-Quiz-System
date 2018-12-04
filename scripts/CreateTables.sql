@@ -62,3 +62,7 @@ create table QuizResult
 	foreign key (quizID) references quiz(quizID) on delete cascade,
     foreign key (userID) references users(userID) on delete cascade
 );
+
+INSERT INTO `permission` (`id`, `permission`) VALUES ('1', 'super');
+INSERT INTO `permission` (`id`, `permission`) VALUES ('1', 'admin');
+INSERT INTO `permission` (`id`, `permission`) VALUES ('1', 'guest');
