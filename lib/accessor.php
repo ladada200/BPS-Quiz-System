@@ -154,9 +154,7 @@ class accessor {
             if ($permission != null) {
                 $tempPer = $permission;
             }
-            $options = [
-              'salt' => $this->salt  
-            ];
+
             $active = true;
             $result = 0;
             
@@ -164,9 +162,8 @@ class accessor {
             $test = $temporary->fetch(PDO::FETCH_ASSOC);
             $result = $test["count(userName)"];
             $temporary->closeCursor();
-            
+            $result++;
             $ID = STR_PAD($result, 3, "0", STR_PAD_RIGHT);
-            $hashword = password_hash($password, PASSWORD_BCRYPT, $options);
             
             
             
@@ -176,7 +173,7 @@ class accessor {
             $temp->bindParam(":ID", $ID);
             $temp->bindParam(":permission", $tempPer);
             $temp->bindParam(":active", $active);
-            $temp->bindParam(":password", $hashword);
+            $temp->bindParam(":password", $password);
             $temp->execute();
             $output = true;
         } catch (Exception $ex) {
