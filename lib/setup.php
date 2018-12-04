@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 
+
 class setup {
     const host = "localhost";
     const dbName = "quizdb";
@@ -16,4 +17,4 @@ class setup {
         
     }
 
-}
+}   //default bs.
