@@ -3,7 +3,6 @@
 window.onload = function () {
 
 	getUser();
-	getScores();
 	getQuizzes();
 	
 
@@ -35,6 +34,12 @@ function showUser(text) {
 	content += "Welcome, User " + user.userName + "! <a href='settings.html' target='_blank'>Settings</a>";
 
 	userDiv.innerHTML = content;
+	
+	if (user.permission == "user" || user.permission == "admin" || user.permission == "super") {
+		
+		showScores();
+		
+	}
 }
 
 
@@ -94,7 +99,7 @@ function showSearch(text) {
 	contentResults += "<div class='col-sm-12'><h2>Results Search</h2><br></div>";
 	contentQuiz += "<div class='col-sm-12'><h2>Quiz Search</h2><br></div>";
 
-	if (user.permission == "user") {
+	if (user.permission == "user" || user.permission == "guest") {
 		contentResults += "<div class='col-sm-3'><h4>Search for quiz results by: </h4></div> <div class='col-sm-3'><select class='form-control typeSelect'>";
 		contentResults += "<option value='title'>Quiz Title</option>";
 		contentResults += "<option value='title'>Words in the Title</option>";
@@ -225,7 +230,24 @@ function quizandresultsSearch() {
 
 function sendResultSearch() {
 	
-	console.log("qrjngqek");
+	
+	var url = "results/" + usersDropDown + resultsTextInput;
+	
+	var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function () {
+	if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+		var resp = xmlhttp.responseText;
+		if (resp.search("ERROR") >= 0 || resp != 1) {
+			alert("oh no...");
+			console.log(resp);
+		} else {
+			//getAllItems();
+		}
+	}
+};
+xmlhttp.open("SEARCH", url, true);
+xmlhttp.send(JSON.stringify(obj));
+	
 }
 
 
