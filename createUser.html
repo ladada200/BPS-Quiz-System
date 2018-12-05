@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>createUserPage</title>
+        <title>BPS Quiz App</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" type="text/css">
@@ -19,7 +19,6 @@ and open the template in the editor.
         <link href="quiztheme.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div>Stuff</div>
         <div class="row header">
             <h1>Bass Pro Shoppe Quiz App</h1>
             <h3>Fish for some learning!</h3>
@@ -27,29 +26,27 @@ and open the template in the editor.
         <div class="container-fluid quizcontainer">
             <div class="row user"></div>
             <div class="login jumbotron">
-                
-             <div class="col-sm-6">
+                <div class="row"> 
+                    <div class="col-sm-6">
 
-                <div>               
-                    <div class="formLabel">User Name</div><input id="userNameInput" type="text">                    
+                        <div class="formLabel">User Name</div><input id="userNameInput" type="text" class="form-control">
+                        <br>                
+
+
+                        <div class="formLabel">Password</div><input id="passwordInput" type="text" class="form-control">                    
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div>               
+                            <div class="formLabel">Email</div><input id="emailInput" type="text" class="form-control"> 
+                            <br><br>
+                            <button id="DoneButton" class="btn btn-lg btn-primary btn-block">Done</button>
+                        </div>
+                    </div>  
+
                 </div>
-                <div>               
-                    <div class="formLabel">Password</div><input id="passwordInput" type="text">                    
-                </div>
-                  <br><br>
-                   </div>
-                
-                 <div class="col-sm-6">
-                <div>               
-                    <div class="formLabel">Email</div><input id="emailInput" type="text">                    
-                </div>
-                <br><br>
-                
-                </div>
-                
-                <div> 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="DoneButton">Done</button>
-                </div>
+
 
             </div>
         </div>
