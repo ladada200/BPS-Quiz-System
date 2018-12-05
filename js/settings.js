@@ -1,7 +1,7 @@
 window.onload = function () {
 
 	getUser();
-	getUserList();
+	
 
 }
 
@@ -86,8 +86,12 @@ function showDelete(text) {
 		content += "<div class='col-sm-2'><h3></3><br><button class='btn btn-sm btn-primary btn-block form-control' type='submit' id='btndeleteself'>Delete Account</button></div>";
 
 	} else if (user.permission == "admin" || user.permission == "super") {
+		
+		getUserList();
 
 		content += "<div class='col-sm-2'><button class='btn btn-sm btn-primary btn-block form-control' type='submit' id='btndeleteself'>Delete Account</button></div><div class='col-sm-2'><button class='btn btn-sm btn-primary btn-block form-control' type='submit' id='btndeleteother'>Delete Other Account</button></div><div class='col-sm-4 userList'></div>";
+		
+		
 	} else {
 		
 		content += "<div class='col-sm-2'><button class='btn btn-sm btn-primary btn-block form-control' type='submit' id='btncreateUser'>Create Account</button>";
@@ -151,7 +155,7 @@ function showCreateQuestion(text) {
 
 	if (user.permission == "admin" || user.permission == "super") {
 		
-		content = "<h3>Create Questions and Quizzes</h3><br><div class='col-sm-2'><button class='btn btn-sm btn-primary btn-block form-control' type='submit' id='btncreateQuestion'>Create Question</button></div>";
+		content = "<h3>Create Questions and Quizzes</h3><br><div class='col-sm-2'><a href='CreateQuestion/index.php'><button class='btn btn-sm btn-primary btn-block form-control' type='submit' id='btncreateQuestion'>Create Question</button></a></div>";
 		
 	}
 	

@@ -208,3 +208,14 @@ a:hover {
 .createQuestion {
 	padding-bottom: 1%;
 }
+
+.error {color: #FF0000;}
+
+.fish img {
+    position: relative;
+    height: 50%;
+    width: 50%;
+    left:26%;
+    right:40%;
+    text-align: center;
+}
