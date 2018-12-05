@@ -4,7 +4,6 @@ window.onload = function () {
 
 	getUser();
 	getQuizzes();
-
 	
 
 }
@@ -38,7 +37,7 @@ function showUser(text) {
 	
 	if (user.permission == "user" || user.permission == "admin" || user.permission == "super") {
 		
-		        getScores();
+		showScores();
 		
 	}
 }
