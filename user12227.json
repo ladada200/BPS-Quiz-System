@@ -2,5 +2,5 @@
 	"userID" : 12227,
 	"userName" : "122227",
 	"password" : "test",
-	"permission" : "guest"
+	"permission" : "user"
 }
