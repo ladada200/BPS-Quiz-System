@@ -13,7 +13,7 @@ function gettempuser() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            var resp = JSON.parse(this.responseText);
+            var resp = JSON.parse(xmlhttp.responseText);
             console.log(resp);
         }
     };

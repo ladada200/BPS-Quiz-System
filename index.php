@@ -21,7 +21,8 @@ and open the template in the editor.
                 var allInputs = document.querySelectorAll("input");
                 allInputs.forEach(function (item) {
                    if (item.value == null || item.value.length == 0 || item.value == "") {
-                       throw "***ERROR***";
+                       throw "***ERROR*** " + item.id + " cannot be empty!";
+                       
                    } 
                 });
                 var obj = {

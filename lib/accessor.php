@@ -138,7 +138,7 @@ class accessor {
         }
 
         try {
-            $tempOut = password_verify($password, $output->password) ? $output->Permission : false;
+            $tempOut = $password == $output->password ? $output->Permission : false;
         } catch (Exception $ex) {
             $tempOut = "ERROR: Exception occured!";
         } 
@@ -165,23 +165,24 @@ class accessor {
             $result++;
             $ID = STR_PAD($result, 3, "0", STR_PAD_RIGHT);
             
-            
-            
-            $temp = $this->conn->prepare($this->addUserStatementString);
-            $temp->bindParam(":username", $username);
-            $temp->bindParam(":email", $email);
-            $temp->bindParam(":ID", $ID);
-            $temp->bindParam(":permission", $tempPer);
-            $temp->bindParam(":active", $active);
-            $temp->bindParam(":password", $password);
-            $temp->execute();
-            $output = true;
+            //placeholder query to check if user exists
+            if (false) { //placeholder query
+                $temp = $this->conn->prepare($this->addUserStatementString);
+                $temp->bindParam(":username", $username);
+                $temp->bindParam(":email", $email);
+                $temp->bindParam(":ID", $ID);
+                $temp->bindParam(":permission", $tempPer);
+                $temp->bindParam(":active", $active);
+                $temp->bindParam(":password", $password);
+                $temp->execute();
+                $output = true;
+                $temp->closeCursor();
+            } else {
+                throw new \Exception("User already exists in database");
+            }
         } catch (Exception $ex) {
-            $output = false;
-        } finally {
-            $temp->closeCursor();
-            
-        }
+            $output = $ex->getMessage();
+        } 
         return $output;
     }   //Create new user
     

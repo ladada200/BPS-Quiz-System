@@ -177,11 +177,11 @@ a:hover {
 }
 
 .black {
-	background-color: black;
+	background: rgba(0,0,0,0.55);
 }
 
 .grey {
-	background-color: darkgray;
+	background: rgba(0,0,0,0.25);
 }
 
 .password {

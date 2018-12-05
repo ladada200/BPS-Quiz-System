@@ -78,7 +78,15 @@ class userMethod {
     
     public function createUser() {
         $temp = new accessor();
-        return $temp->addUser($this->username, $this->password, $this->email, NULL) ? "user added to database" : "Could not add user";
+        if ($this->confirmEmail()) {
+            $output = $temp->addUser($this->username, $this->password, $this->email, NULL);
+            if ($output === true) {
+                $output = "user added to database";
+            }
+        } else {
+            $output = "Email invalid";
+        }
+        return $output;
     }
     
     public function updateUser() {
