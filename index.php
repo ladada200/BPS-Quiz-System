@@ -19,47 +19,8 @@ and open the template in the editor.
         <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <link href="quiztheme.css" rel="stylesheet" type="text/css">
 
-        <style>
-            /* Make the image fully responsive */
-        </style>
 
-        <script type="text/javascript">
-
-
-            window.onload = function () {
-                document.querySelector("#btnSubmit").addEventListener("click", simple, false);
-            }
-
-            function simple(e) {
-                e.preventDefault();
-                try {
-                    var allInputs = document.querySelectorAll("input");
-                    allInputs.forEach(function (item) {
-                        if (item.value == null || item.value.length == 0 || item.value == "") {
-                            throw "***ERROR*** " + item.id + " cannot be empty!";
-
-                        }
-                    });
-                    var obj = {
-                        "username": allInputs[0].value,
-                        "password": allInputs[1].value,
-                        "email": allInputs[2].value
-                    }
-                    var url = "account/";
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = () => {
-                        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                            console.log(xmlhttp.responseText);
-                        }
-                    };
-                    xmlhttp.open("POST", url, true);
-                    xmlhttp.send(JSON.stringify(obj));
-                } catch (ex) {
-                    console.log(ex);
-                }
-            }
-
-        </script>
+    
     </head>
     <body>
 
@@ -86,15 +47,15 @@ and open the template in the editor.
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner fishousel">
                                 <div class="item active">
-                                    <img src="51NLSAJZdnL.jpg" alt="Los Angeles">
+                                    <img src="Images/51NLSAJZdnL.jpg" alt="Los Angeles">
                                 </div>
 
                                 <div class="item">
-                                    <img src="R33VLBVL3WL51400264804627.jpg" alt="Chicago">
+                                    <img src="Images/R33VLBVL3WL51400264804627.jpg" alt="Chicago">
                                 </div>
 
                                 <div class="item">
-                                    <img src="largemouth-bass-slippers-29119.jpg" alt="New york">
+                                    <img src="Images/largemouth-bass-slippers-29119.jpg" alt="New york">
                                 </div>
                                 <br><br>
                             </div>
@@ -115,16 +76,10 @@ and open the template in the editor.
                 <div class="row login2">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-6">
-                <form method="POST">
-                    <div>
-                        <div>Username: <input type="text" id="username" class="form-control" required></div>
-                        <div>Password: <input type="password" id="password" class="form-control" required aria-complete="list" aria-autocomplete="list"></div>
-                        <div>Email: <input type="email" id="email" class="form-control" required></div>
-                        <div><button id="btnSubmit" class="btn btn-lg btn-primary btn-block">Submit</button></div>
+
+                        <div><a href="login.html"><button id="btnSubmit" class="btn btn-lg btn-primary btn-block">Dive In!</button></a></div>
                         <br><br>
                         <a href="settings.html">Settings</a>
-                        <br>
-                        <a href="login.html">Login</a>
                     </div>
                 </form>
                     </div>
