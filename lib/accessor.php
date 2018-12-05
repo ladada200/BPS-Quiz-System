@@ -17,7 +17,7 @@ class accessor {
     private $salt = "4d494e497469676572ab4x";
     
     private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
-    private $addUserStatementString = "INSERT INTO USERS (UserName, Password, Email) VALUES (:username, :password, :email)";
+    private $addUserStatementString = "INSERT INTO USERS (`userID`, `userName`, `password`, `email`, `permissionLevel`, `status`) VALUES (:ID, :username, :password, :email, :permission, :active)";
     private $removeUserStatementString =  "DELETE FROM USERS WHERE UserName = :username";
     private $deactivateUserStatementString = "UPDATE USERS SET active = false WHERE UserName=:username AND password=:password";
     private $activateUserStatementString = "UPDATE USERS SET active = true WHERE UserName=:username AND password=:password";
@@ -146,20 +146,38 @@ class accessor {
         return $tempOut;
     }   //Log in user
     
-    public function addUser($username, $password, $email) {
-        $output = false;
-        $options = [
-          'salt' => $this->salt  
-        ];
+    public function addUser($username, $password, $email, $permission) {
+        $output = "";
         try {
+            
+            $tempPer = "guest";
+            if ($permission != null) {
+                $tempPer = $permission;
+            }
+
+            $active = true;
+            $result = 0;
+            
+            $temporary = $this->conn->query("SELECT count(userName) FROM USERS");
+            $test = $temporary->fetch(PDO::FETCH_ASSOC);
+            $result = $test["count(userName)"];
+            $temporary->closeCursor();
+            $result++;
+            $ID = STR_PAD($result, 3, "0", STR_PAD_RIGHT);
+            
+            
+            
             $temp = $this->conn->prepare($this->addUserStatementString);
             $temp->bindParam(":username", $username);
             $temp->bindParam(":email", $email);
-            $temp->bindParam(":password", password_hash($password, PASSWORD_BCRYPT, $options));
+            $temp->bindParam(":ID", $ID);
+            $temp->bindParam(":permission", $tempPer);
+            $temp->bindParam(":active", $active);
+            $temp->bindParam(":password", $password);
             $temp->execute();
             $output = true;
         } catch (Exception $ex) {
-            $output = $ex->getMessage();
+            $output = false;
         } finally {
             $temp->closeCursor();
             

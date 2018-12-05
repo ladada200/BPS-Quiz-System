@@ -16,23 +16,9 @@ if ($method == "login") {
 
 } else if ($method == "POST") { 
     
-    $filters = array (
-        "username" => array
-          (
-          "filter"=>FILTER_CALLBACK,
-          "flags"=>FILTER_FORCE_ARRAY,
-          "options"=>"ucwords"
-          ),
-        "password" => array
-          (
-          "filter"=>FILTER_SANITIZE_SPECIAL_CHARS,
-          ),
-        "email"=> FILTER_VALIDATE_EMAIL
-        );
-
-    $contents = filter_input_array(INPUT_POST, $filters);
-    
-    $temp = new userMethod($contents['username'], $contents['password'], $contents['email']);
+    $body = file_get_contents('php://input');
+    $output = json_decode($body, true);
+    $temp = new userMethod($output['username'], $output['password'], $output['email']);
     echo $temp->createUser();
     
 } else if ($method == "deactivateUser") {
@@ -92,7 +78,7 @@ class userMethod {
     
     public function createUser() {
         $temp = new accessor();
-        return $temp->addUser($this->username, $this->password, $this->email);
+        return $temp->addUser($this->username, $this->password, $this->email, NULL) ? "user added to database" : "Could not add user";
     }
     
     public function updateUser() {
