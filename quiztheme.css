@@ -217,3 +217,21 @@ a:hover {
 .createQuestion {
 	padding-bottom: 1%;
 }
+
+  .carousel-inner img {
+      width: 100%;
+  }
+  
+  .fishousel {
+      
+      height: 450px;
+  
+  }
+
+ .login2 {
+     margin-top: 10%;
+	margin-right: 10%;
+	margin-left: 10%;
+	margin-bottom: 10%;
+	
+}
