@@ -64,5 +64,5 @@ create table QuizResult
 );
 
 INSERT INTO `permission` (`id`, `permission`) VALUES ('1', 'super');
-INSERT INTO `permission` (`id`, `permission`) VALUES ('1', 'admin');
-INSERT INTO `permission` (`id`, `permission`) VALUES ('1', 'guest');
+INSERT INTO `permission` (`id`, `permission`) VALUES ('2', 'admin');
+INSERT INTO `permission` (`id`, `permission`) VALUES ('3', 'guest');
