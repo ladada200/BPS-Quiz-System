@@ -75,7 +75,7 @@ CREATE DEFINER=root@localhost FUNCTION USER_EXISTS
 BEGIN
     SET @User_exists = 0;
     SELECT COUNT(1) INTO @found
-    FROM dbname.tablename
+    FROM quizdb.users
     WHERE username = GIVEN_USERNAME;
     IF @found > 0 THEN
         SET @User_exists = 1;
