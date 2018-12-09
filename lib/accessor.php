@@ -134,14 +134,17 @@ class accessor {
             $temp->execute();
             $outTemp = $temp->fetch(PDO::FETCH_ASSOC);
 
-            if($outTemp != false) {
-              if ($outTemp["status"] != "0") {
+            if($outTemp != false) { //not false from return
+
+              if ($outTemp["status"] != "0") {  //if we can validate that the user is active
                 $tempOut = $outTemp["PermissionLevel"];
                 session_start();
-                $_SESSION['permissionLevel'] = $tempOut;
+                $_SESSION['username'] = $username;  //store UserName
+                $_SESSION['permissionLevel'] = $tempOut;  //store permission level
               } else {
                 throw new Exception("account deactivated");
-              }
+              } //end if catch for user active status
+
             } else {
               throw new Exception("user not found in database");
             } //end eval

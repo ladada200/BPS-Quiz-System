@@ -1,5 +1,6 @@
 <?php
 
+
 $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
 require_once ($projectRoot . '/utils/ChromePhp.php');
 require_once ($projectRoot . '/lib/accessor.php');
