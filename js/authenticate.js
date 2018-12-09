@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,13 +16,13 @@ function ceh() {
 
 function evth(e) {
     e.preventDefault();
-    
+
     if (e.srcElement.id == "btnLogin") {
         var uName = document.querySelector("#inputUsername").value;
         var pWord = document.querySelector("#inputPassword").value;
         var obj = {
-            username: uName,
-            password: pWord
+            "username": uName,
+            "password": pWord
         };
         var url = "account/";
         var xmlhttp = new XMLHttpRequest();
@@ -35,9 +35,9 @@ function evth(e) {
         xmlhttp.open("login", url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(JSON.stringify(obj));
-        
+
     } else if (e.srcElement.id == "btnContinueAsGuest") {
-        
+
     }
     
     
