@@ -4,7 +4,7 @@
  * Author   :   Christopher Rupert
  * Version  :   1.0.2
  * Last     :   11/21/2018
- * Desc     :   Accessability document used for long-hand SQL Queries until SQL 
+ * Desc     :   Accessability document used for long-hand SQL Queries until SQL
  *               are made and utilized.
  */
 
@@ -15,7 +15,7 @@ require_once ($projectRoot . '/lib/ConnectionManager.php');
 class accessor {
     private $conn = "";
     private $salt = "4d494e497469676572ab4x";
-    
+
     private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
     private $addUserStatementString = "INSERT INTO USERS (`userID`, `userName`, `password`, `email`, `permissionLevel`, `status`) VALUES (:ID, :username, :password, :email, :permission, :active)";
     private $removeUserStatementString =  "DELETE FROM USERS WHERE UserName = :username";
@@ -23,7 +23,7 @@ class accessor {
     private $activateUserStatementString = "UPDATE USERS SET active = true WHERE UserName=:username AND password=:password";
     private $updatePasswordStatementString = "UPDATE USERS SET Password = :password WHERE UserName=:username";
     private $showAllUsersStatementString = "SELECT UserID, Username, Permission FROM USERS";
-            
+
     private $searchQuizByIdStatementString = "SELECT * FROM Quiz WHERE ID=:bindParam";
     private $searchQuizByTagStatementString = "SELECT * FROM Quiz WHERE tags LIKE \"%:bindParam%\"";
     private $searchQuizByWITStatementString = "SELECT * FROM Quiz WHERE QuizTitle LIKE \"%:bindParam%\" ";
@@ -32,7 +32,7 @@ class accessor {
     private $searchQuestionByWIQTStatementString = "SELECT * FROM QuizQuestions WHERE Question LIKE \"%:bindParam%\"";
     private $searchQuestionByWITCStatementString = "SELECT * FROM QuizQuestions WHERE QuestionID = (SELECT QuestionID FROM Question WHERE choices LIKE \"%:bindParam%\")";
     private $searchQuestionByTagStatementString = "SELECT * FROM QuizQuestions WHERE tags LIKE \%:bindParam%\"";
-    
+
     //log into system
     private $loginStatement = NULL;
     private $addUserStatement = NULL;
@@ -41,7 +41,7 @@ class accessor {
     private $showAllUsersStatement = NULL;
     private $searchQuiz = NULL;
     private $searchQuestion = NULL;
-    
+
     public function __construct() {
         $cm = new ConnectionManager();
         $this->conn = $cm->connect_db();
@@ -87,7 +87,7 @@ class accessor {
             throw new Exception("bad statement: '" . $this->searchQuiz . "'");
         }
     }   //Regular constructor
-    
+
     public function searchQuiz($input) {
         switch($input) {
             case "id":
@@ -102,7 +102,7 @@ class accessor {
         }
         return $searchQuiz;
     }   //Search quiz by id, tags, etc.
-    
+
     public function searchQuestion($input) {
         switch($input) {
             case "id":
@@ -120,7 +120,7 @@ class accessor {
         }
         return $searchQuestion;
     }   //search quiz by question id, tags, words in title, etc.
-    
+
     public function login($username, $password) {
         $output = new \stdClass();
         $output->password = "";
@@ -141,15 +141,15 @@ class accessor {
             $tempOut = $password == $output->password ? $output->Permission : false;
         } catch (Exception $ex) {
             $tempOut = "ERROR: Exception occured!";
-        } 
-        
+        }
+
         return $tempOut;
     }   //Log in user
-    
+
     public function addUser($username, $password, $email, $permission) {
         $output = "";
         try {
-            
+
             $tempPer = "guest";
             if ($permission != null) {
                 $tempPer = $permission;
@@ -157,16 +157,24 @@ class accessor {
 
             $active = true;
             $result = 0;
-            
-            $temporary = $this->conn->query("SELECT count(userName) FROM USERS");
+
+            $temporary = $this->conn->query("SELECT MAX(userID) FROM USERS");
             $test = $temporary->fetch(PDO::FETCH_ASSOC);
-            $result = $test["count(userName)"];
+            $result = (int)$test["MAX(userID)"];
             $temporary->closeCursor();
             $result++;
-            $ID = STR_PAD($result, 3, "0", STR_PAD_RIGHT);
-            
+            $ID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
+
             //placeholder query to check if user exists
-            if (false) { //placeholder query
+
+            $checkIfExists = $this->conn->prepare("SELECT `USER_EXISTS`(:username) AS `USER_EXISTS`;");
+            $checkIfExists->bindParam(":username", $username);
+            $checkIfExists->execute();
+            $tfExist = $checkIfExists->fetchAll();
+
+            $checkIfExists->closeCursor();
+
+            if ($tfExist[0]["USER_EXISTS"] != "1") { //placeholder query
                 $temp = $this->conn->prepare($this->addUserStatementString);
                 $temp->bindParam(":username", $username);
                 $temp->bindParam(":email", $email);
@@ -174,18 +182,17 @@ class accessor {
                 $temp->bindParam(":permission", $tempPer);
                 $temp->bindParam(":active", $active);
                 $temp->bindParam(":password", $password);
-                $temp->execute();
-                $output = true;
+                $output = $temp->execute();
                 $temp->closeCursor();
             } else {
                 throw new \Exception("User already exists in database");
             }
         } catch (Exception $ex) {
             $output = $ex->getMessage();
-        } 
+        }
         return $output;
     }   //Create new user
-    
+
     public function showAll() {
         try {
             $showAllUsersStatement = $this->showAllUsersStatementString;
@@ -198,7 +205,7 @@ class accessor {
             return $res;
         }
     }   //read all users from database
-    
+
     public function removeUser($username) {
         $res = false;
         try {
@@ -209,11 +216,11 @@ class accessor {
         } catch (Exception $ex) {
             $res = false;
         } finally {
-            $temp->closeCursor();       
+            $temp->closeCursor();
         }
         return $res;
     }   //remove user from database
-    
+
     public function updateUser($username, $password) {
         $res = false;
         try {
@@ -225,11 +232,11 @@ class accessor {
         } catch (Exception $ex) {
             $res = false;
         } finally {
-            $temp->closeCursor();       
+            $temp->closeCursor();
         }
         return $res;
     }   //update user password
-    
+
     public function userAccountStatus($username, $password, $tf) {
         $res = false;
         try {
