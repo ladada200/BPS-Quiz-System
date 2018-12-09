@@ -78,8 +78,6 @@ and open the template in the editor.
                     <div class="col-sm-6">
 
                         <div><a href="login.html"><button id="btnSubmit" class="btn btn-lg btn-primary btn-block">Dive In!</button></a></div>
-                        <br><br>
-                        <a href="settings.html">Settings</a>
                     </div>
                 </form>
                     </div>
