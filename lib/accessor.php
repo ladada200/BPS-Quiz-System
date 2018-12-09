@@ -16,7 +16,7 @@ class accessor {
     private $conn = "";
     private $salt = "4d494e497469676572ab4x";
 
-    private $loginStatementString = "SELECT PermissionLevel FROM USERS WHERE UserName = :username AND Password = :password";
+    private $loginStatementString = "SELECT PermissionLevel, status FROM USERS WHERE UserName = :username AND Password = :password";
     private $addUserStatementString = "INSERT INTO USERS (`userID`, `userName`, `password`, `email`, `permissionLevel`, `status`) VALUES (:ID, :username, :password, :email, :permission, :active)";
     private $removeUserStatementString =  "DELETE FROM USERS WHERE UserName = :username";
     private $deactivateUserStatementString = "UPDATE USERS SET active = false WHERE UserName=:username AND password=:password";
@@ -126,23 +126,31 @@ class accessor {
         $output->password = "";
         $output->Permission = "";
         $tempOut = false;
+
         try {
             $temp = $this->conn->prepare($this->loginStatementString);
             $temp->bindParam(":username", $username);
             $temp->bindParam(":password", $password);
             $temp->execute();
             $outTemp = $temp->fetch(PDO::FETCH_ASSOC);
+
             if($outTemp != false) {
-              $tempOut = var_dump($outTemp);
+              if ($outTemp["status"] != "0") {
+                $tempOut = $outTemp["PermissionLevel"];
+                session_start();
+                $_SESSION['permissionLevel'] = $tempOut;
+              } else {
+                throw new Exception("account deactivated");
+              }
             } else {
               throw new Exception("user not found in database");
-            }
+            } //end eval
 
         } catch (Exception $ex) {
             $tempOut = $ex->getMessage();
         } finally {
             $temp->closeCursor();
-        }
+        } //end defaults
 
         return $tempOut;
     }   //Log in user
