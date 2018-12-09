@@ -16,7 +16,7 @@ class accessor {
     private $conn = "";
     private $salt = "4d494e497469676572ab4x";
 
-    private $loginStatementString = "SELECT Password, Permission FROM USER WHERE UserName = :username";
+    private $loginStatementString = "SELECT PermissionLevel FROM USERS WHERE UserName = :username AND Password = :password";
     private $addUserStatementString = "INSERT INTO USERS (`userID`, `userName`, `password`, `email`, `permissionLevel`, `status`) VALUES (:ID, :username, :password, :email, :permission, :active)";
     private $removeUserStatementString =  "DELETE FROM USERS WHERE UserName = :username";
     private $deactivateUserStatementString = "UPDATE USERS SET active = false WHERE UserName=:username AND password=:password";
@@ -125,22 +125,23 @@ class accessor {
         $output = new \stdClass();
         $output->password = "";
         $output->Permission = "";
-        $tempOut = NULL;
+        $tempOut = false;
         try {
             $temp = $this->conn->prepare($this->loginStatementString);
             $temp->bindParam(":username", $username);
+            $temp->bindParam(":password", $password);
             $temp->execute();
+            $outTemp = $temp->fetch(PDO::FETCH_ASSOC);
+            if($outTemp != false) {
+              $tempOut = var_dump($outTemp);
+            } else {
+              throw new Exception("user not found in database");
+            }
+
         } catch (Exception $ex) {
             $tempOut = $ex->getMessage();
         } finally {
             $temp->closeCursor();
-            $temp->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        try {
-            $tempOut = $password == $output->password ? $output->Permission : false;
-        } catch (Exception $ex) {
-            $tempOut = "ERROR: Exception occured!";
         }
 
         return $tempOut;
