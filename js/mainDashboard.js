@@ -2,11 +2,20 @@
 
 window.onload = function () {
 
+        pullUser();
 	getUser();
 	getQuizzes();
+        
 	
 
 }
+
+function pullUser() {
+    
+    var userObj = JSON.parse(window.localStorage.getItem("currentUser"));
+    
+}
+
 
 function getUser() {
 	var url = "user12227.json"; // file name or server-side process name
@@ -37,7 +46,7 @@ function showUser(text) {
 	
 	if (user.permission == "user" || user.permission == "admin" || user.permission == "super") {
 		
-		showScores();
+		getScores();
 		
 	}
 }
