@@ -48,24 +48,22 @@ function getUser(e) {
     var url = "";
     
     if (e.srcElement.id == "btnLogin") {
-	url = "user12227.json"; // file name or server-side process name
+	url = ".../user12227.json"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-//			showUser(xmlhttp.responseText); // do something when server responds
-//			showSearch(xmlhttp.responseText);
+			storeUser(xmlhttp.responseText); // do something when server responds
 		}
 	};
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
     } else if (e.srcElement.id == "btnContinueAsGuest") {
         
-        	url = "guest.json"; // file name or server-side process name
+        	url = ".../guest.json"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-//			showUser(xmlhttp.responseText); // do something when server responds
-//			showSearch(xmlhttp.responseText);
+			storeUser(xmlhttp.responseText); // do something when server responds
 		}
 	};
 	xmlhttp.open("GET", url, true);
@@ -74,4 +72,7 @@ function getUser(e) {
     }
 }
 
-function storeUser()
+function storeUser(text) {
+    
+    var user = text;
+}
