@@ -27,20 +27,10 @@ if ($method == "login") {
 
 else if($method == "GET") {
     
-      if (!filter_has_var(INPUT_GET, 'itemid')) {
-        try {
             $ua = new accessor();
-            $results = $ua->showAll();
+            $results = $ua->getAllUsers();
             $results = json_encode($results);
             echo $results;
-        }
-        catch (Exception $e) {
-            echo "ERROR " . $e->getMessage();
-        }
-    }
-    else {
-        ChromePhp::log("You are requesting item " . filter_input(INPUT_GET, 'itemid'));
-    }
     
 }
 

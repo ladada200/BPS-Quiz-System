@@ -210,10 +210,49 @@ class accessor {
         }
         return $output;
     }   //Create new user
+    
+    
+        public function getUsersByQuery($showAllUsersStatementString) {
+        $result = [];
+
+        try {
+            $stmt = $this->conn->prepare($showAllUsersStatementString);
+            $stmt->execute();
+            $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($dbresults as $r) {
+                $itemID = $r['userid'];
+                $itemCategoryID = $r['username'];
+                $description = $r['permission'];
+                $obj = new user($UserID, $username, $permission);
+                array_push($result, $obj);
+            }
+        }
+        catch (Exception $e) {
+            $result = [];
+        }
+        finally {
+            if (!is_null($stmt)) {
+                $stmt->closeCursor();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Gets all menu items.
+     * 
+     * @return array MenuItem objects, possibly empty
+     */
+    public function getAllUsers() {
+        return $this->getUsersByQuery("SELECT * FROM Users");
+    }
+    
 
     public function showAll() {
         try {
-            $showAllUsersStatement = $this->showAllUsersStatementString;
+            $showAllUsersStatement = $this->conn->query($this->showAllUsersStatementString);
             $showAllUsersStatement->execute();
             $res = $showAllUsersStatement->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $ex) {
