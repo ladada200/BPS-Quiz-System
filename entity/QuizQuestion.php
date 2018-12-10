@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,7 @@ class QuizQuestion {
     private $questionText = "";
     private $choices = [];
     private $answer = 0;
-    
+
     public function __construct($questionID, $questionText, $choices, $answer) {
         $this->questionID = $questionID;
         $this->questionText = $questionText;
@@ -24,7 +24,7 @@ class QuizQuestion {
     function getQuestionID() {
         return $this->questionID;
     }
-    
+
     function getQuestionText() {
         return $this->questionText;
     }
@@ -37,6 +37,19 @@ class QuizQuestion {
         return $this->answer;
     }
 
+    function insertIntoDB($input) {
+        try {
+          $temp = $input;
+          $temp->bindParam(":questionText", $this->qusetionText);
+          $temp->bindParam(":choices", $choicOptions);
+          $temp->bindParam(":answer", $this->answer);
+          $temp->execute();
+
+        } catch (ex) {
+          $temp = ex->getMessage();
+        }
+        return $temp;
+    }
 
 }
 header("location: ../");
