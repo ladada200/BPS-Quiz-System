@@ -11,6 +11,7 @@
 $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
 require_once ($projectRoot . '/utils/ChromePhp.php');
 require_once ($projectRoot . '/lib/ConnectionManager.php');
+require_once ($projectRoot . '/entity/user.php');
 
 class accessor {
     private $conn = "";
@@ -219,12 +220,20 @@ class accessor {
             $stmt = $this->conn->prepare($showAllUsersStatementString);
             $stmt->execute();
             $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            var_dump($dbresults);
+            
 
             foreach ($dbresults as $r) {
-                $userID = $r['userid'];
-                $username = $r['username'];
-                $permission = $r['permission'];
-                $obj = new user($userID, $username, $permission);
+                
+                
+                $userID = $r['userID'];
+                $username = $r['userName'];
+                $password = $r['password'];
+                $permission = $r['permissionLevel'];
+                $status = $r['status'];
+                $email = $r['email'];
+                $obj = new User($username, $password, $email, $permission, $status);
                 array_push($result, $obj);
             }
         }

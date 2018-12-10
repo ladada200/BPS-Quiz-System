@@ -15,12 +15,11 @@ class User {
     private $accountStatus;
     
     //used for returning as object from SQL;
-    function __construct($username, $password, $email, $permission, $accountCreationTime, $accountStatus) {
+    function __construct($username, $password, $email, $permission, $accountStatus) {
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
         $this->permission = $permission;
-        $this->accountCreationTime = $accountCreationTime;
         $this->accountStatus = $accountStatus;
     }
 
