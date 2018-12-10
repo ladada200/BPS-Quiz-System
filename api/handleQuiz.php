@@ -13,7 +13,18 @@ if ($method == "POST") {
   $temp = new handleQuiz($output['author'], $output['title'], $output['questions'], $output['tags']);
   echo $temp->insertQuiz();
 
-} else {
+} 
+
+else if($method == "GET") {
+
+            $ua = new accessor();
+            $results = $ua->getAllQuizzess();
+            $results = json_encode($results, true);
+            echo $results;
+
+}
+
+else {
   return "*** ERROR: Unable to process request";
 }
 

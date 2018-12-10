@@ -12,6 +12,7 @@ $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System';
 require_once ($projectRoot . '/utils/ChromePhp.php');
 require_once ($projectRoot . '/lib/ConnectionManager.php');
 require_once ($projectRoot . '/entity/user.php');
+require_once ($projectRoot . '/entity/Quiz.php');
 
 class accessor {
 
@@ -265,15 +266,17 @@ class accessor {
             $stmt->execute();
             $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            var_dump($dbresults);
+            //var_dump($dbresults);
 
 
             foreach ($dbresults as $r) {
 
-                $quizTitle = $r['userID'];
-                $input = $r['userName'];
-                $tags = $r['password'];
-                $obj = new Quiz($quizTitle, $input, $tags);
+                //$quizID = $r['userID'];
+                $quiztitle = $r['quizTitle'];
+                $input = [];
+                $tags = $r['tags'];
+                $author = $r['author'];
+                $obj = new Quiz($quizTitle, $input, $tags, $author);
                 array_push($result, $obj);
             }
         } catch (Exception $e) {

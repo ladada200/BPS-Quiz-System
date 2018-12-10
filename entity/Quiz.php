@@ -11,9 +11,11 @@ class Quiz implements JsonSerializable {
     private $quizTitle = "";
     private $quizQuestions = [];
     private $tags = [];
-    
-    function __construct($quizTitle, $input, $tags) {
+    private $author = "";
+            
+    function __construct($quizTitle, $input, $tags, $author) {
         $this->quizTitle = $quizTitle;
+        $this->author = $author;
         foreach($input as $val) {
             $this->quizID = $val->getQuizID();
  
