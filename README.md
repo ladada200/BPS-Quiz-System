@@ -1,3 +1,5 @@
 # BPS-Quiz-System
+===
+[https://en.wikipedia.org/wiki/Kobayashi_Maru](https://en.wikipedia.org/wiki/Kobayashi_Maru)
 
-Push it real good :T
+Produced for PHP class for Stephen Monk. IT:PA Year 2
