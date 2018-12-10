@@ -78,11 +78,13 @@ function showScores(text) {
 
 function getUserList(text) {
 
-	var url = "userlist.json"; // file name or server-side process name
+	var url = "account/"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			showUserList(xmlhttp.responseText); // do something when server responds
+		console.log(xmlhttp.responseText);	
+                showUserList(xmlhttp.responseText); // do something when server responds
+                        
 		}
 	};
 	xmlhttp.open("GET", url, true);
