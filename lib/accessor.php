@@ -145,7 +145,7 @@ class accessor {
                 $res->username = $username;
                 $res->permission = $outTemp["PermissionLevel"];
 
-                $tempOut = $res;
+                $tempOut = json_encode($res, true);
 
               } else {
                 throw new Exception("account deactivated");
