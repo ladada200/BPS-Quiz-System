@@ -29,7 +29,7 @@ else if($method == "GET") {
     
             $ua = new accessor();
             $results = $ua->getAllUsers();
-            $results = json_encode($results, JSON_NUMERIC_CHECK);
+            $results = json_encode($results, true);
             echo $results;
     
 }

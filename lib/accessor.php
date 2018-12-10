@@ -14,26 +14,23 @@ require_once ($projectRoot . '/lib/ConnectionManager.php');
 require_once ($projectRoot . '/entity/user.php');
 
 class accessor {
+
     private $conn = "";
     private $salt = "4d494e497469676572ab4x";
-
     private $loginStatementString = "SELECT PermissionLevel, status FROM USERS WHERE UserName = :username AND Password = :password";
     private $addUserStatementString = "INSERT INTO USERS (`userID`, `userName`, `password`, `email`, `permissionLevel`, `status`) VALUES (:ID, :username, :password, :email, :permission, :active)";
-    private $removeUserStatementString =  "DELETE FROM USERS WHERE UserName = :username";
+    private $removeUserStatementString = "DELETE FROM USERS WHERE UserName = :username";
     private $deactivateUserStatementString = "UPDATE USERS SET active = false WHERE UserName=:username AND password=:password";
     private $activateUserStatementString = "UPDATE USERS SET active = true WHERE UserName=:username AND password=:password";
     private $updatePasswordStatementString = "UPDATE USERS SET Password = :password WHERE UserName=:username";
     private $showAllUsersStatementString = "SELECT UserID, Username, Permission FROM USERS";
-
     private $searchQuizByIdStatementString = "SELECT * FROM Quiz WHERE ID=:bindParam";
     private $searchQuizByTagStatementString = "SELECT * FROM Quiz WHERE tags LIKE \"%:bindParam%\"";
     private $searchQuizByWITStatementString = "SELECT * FROM Quiz WHERE QuizTitle LIKE \"%:bindParam%\" ";
-
     private $searchQuestionByIdStatementString = "SELECT * FROM QuizQuestions WHERE QuizID=:bindParam";
     private $searchQuestionByWIQTStatementString = "SELECT * FROM QuizQuestions WHERE Question LIKE \"%:bindParam%\"";
     private $searchQuestionByWITCStatementString = "SELECT * FROM QuizQuestions WHERE QuestionID = (SELECT QuestionID FROM Question WHERE choices LIKE \"%:bindParam%\")";
     private $searchQuestionByTagStatementString = "SELECT * FROM QuizQuestions WHERE tags LIKE \%:bindParam%\"";
-
     //log into system
     private $loginStatement = NULL;
     private $addUserStatement = NULL;
@@ -87,10 +84,12 @@ class accessor {
         if (is_null($this->searchQuiz)) {
             throw new Exception("bad statement: '" . $this->searchQuiz . "'");
         }
-    }   //Regular constructor
+    }
+
+//Regular constructor
 
     public function searchQuiz($input) {
-        switch($input) {
+        switch ($input) {
             case "id":
                 $searchQuiz = $this->searchQuizByIdStatementString;
                 break;
@@ -102,10 +101,12 @@ class accessor {
                 break;
         }
         return $searchQuiz;
-    }   //Search quiz by id, tags, etc.
+    }
+
+//Search quiz by id, tags, etc.
 
     public function searchQuestion($input) {
-        switch($input) {
+        switch ($input) {
             case "id":
                 $searchQuestion = $this->searchQuestionByIdStatementString;
                 break;
@@ -120,7 +121,9 @@ class accessor {
                 break;
         }
         return $searchQuestion;
-    }   //search quiz by question id, tags, words in title, etc.
+    }
+
+//search quiz by question id, tags, words in title, etc.
 
     public function login($username, $password) {
         $output = new \stdClass();
@@ -135,27 +138,23 @@ class accessor {
             $temp->execute();
             $outTemp = $temp->fetch(PDO::FETCH_ASSOC);
 
-            if($outTemp != false) { //not false from return
+            if ($outTemp != false) { //not false from return
+                if ($outTemp["status"] != "0") {  //if we can validate that the user is active
+                    session_start();
+                    $_SESSION['username'] = $username;  //store UserName
+                    $_SESSION['permissionLevel'] = $tempOut;  //store permission level
 
-              if ($outTemp["status"] != "0") {  //if we can validate that the user is active
-                session_start();
-                $_SESSION['username'] = $username;  //store UserName
-                $_SESSION['permissionLevel'] = $tempOut;  //store permission level
+                    $res = new \stdClass();
+                    $res->username = $username;
+                    $res->permission = $outTemp["PermissionLevel"];
 
-                $res = new \stdClass();
-                $res->username = $username;
-                $res->permission = $outTemp["PermissionLevel"];
-
-                $tempOut = json_encode($res, true);
-
-              } else {
-                throw new Exception("account deactivated");
-              } //end if catch for user active status
-
+                    $tempOut = json_encode($res, true);
+                } else {
+                    throw new Exception("account deactivated");
+                } //end if catch for user active status
             } else {
-              throw new Exception("user not found in database");
+                throw new Exception("user not found in database");
             } //end eval
-
         } catch (Exception $ex) {
             $tempOut = $ex->getMessage();
         } finally {
@@ -163,7 +162,9 @@ class accessor {
         } //end defaults
 
         return $tempOut;
-    }   //Log in user
+    }
+
+//Log in user
 
     public function addUser($username, $password, $email, $permission) {
         $output = "";
@@ -179,7 +180,7 @@ class accessor {
 
             $temporary = $this->conn->query("SELECT MAX(userID) FROM USERS");
             $test = $temporary->fetch(PDO::FETCH_ASSOC);
-            $result = (int)$test["MAX(userID)"];
+            $result = (int) $test["MAX(userID)"];
             $temporary->closeCursor();
             $result++;
             $ID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
@@ -210,23 +211,24 @@ class accessor {
             $output = $ex->getMessage();
         }
         return $output;
-    }   //Create new user
-    
-    
-        public function getUsersByQuery($showAllUsersStatementString) {
+    }
+
+//Create new user
+
+    public function getUsersByQuery($showAllUsersStatementString) {
         $result = [];
 
         try {
             $stmt = $this->conn->prepare($showAllUsersStatementString);
             $stmt->execute();
             $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            var_dump($dbresults);
-            
+
+            //var_dump($dbresults);
+
 
             foreach ($dbresults as $r) {
-                
-                
+
+
                 $userID = $r['userID'];
                 $username = $r['userName'];
                 $password = $r['password'];
@@ -236,11 +238,43 @@ class accessor {
                 $obj = new User($username, $password, $email, $permission, $status);
                 array_push($result, $obj);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $result = [];
+        } finally {
+            if (!is_null($stmt)) {
+                $stmt->closeCursor();
+            }
         }
-        finally {
+
+        return $result;
+    }
+
+    public function getAllUsers() {
+        return $this->getUsersByQuery("SELECT * FROM Users");
+    }
+
+    public function getQuizzesByQuery($StatementString) {
+        $result = [];
+
+        try {
+            $stmt = $this->conn->prepare($StatementString);
+            $stmt->execute();
+            $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            var_dump($dbresults);
+
+
+            foreach ($dbresults as $r) {
+
+                $quizTitle = $r['userID'];
+                $input = $r['userName'];
+                $tags = $r['password'];
+                $obj = new Quiz($quizTitle, $input, $tags);
+                array_push($result, $obj);
+            }
+        } catch (Exception $e) {
+            $result = [];
+        } finally {
             if (!is_null($stmt)) {
                 $stmt->closeCursor();
             }
@@ -254,10 +288,9 @@ class accessor {
      * 
      * @return array MenuItem objects, possibly empty
      */
-    public function getAllUsers() {
-        return $this->getUsersByQuery("SELECT * FROM Users");
+    public function getAllQuizzess() {
+        return $this->getQuizzesByQuery("SELECT * FROM Quiz");
     }
-    
 
     public function showAll() {
         try {
@@ -270,7 +303,9 @@ class accessor {
             $showAllUsersStatement->closeCursor();
             return $res;
         }
-    }   //read all users from database
+    }
+
+//read all users from database
 
     public function removeUser($username) {
         $res = false;
@@ -285,14 +320,16 @@ class accessor {
             $temp->closeCursor();
         }
         return $res;
-    }   //remove user from database
+    }
+
+//remove user from database
 
     public function updateUser($username, $password) {
         $res = false;
         try {
             $temp = $this->conn->prepare($this->updatePasswordStatementString);
-            $temp->bindParam(":username",$username);
-            $temp->bindParam(":password",$password);
+            $temp->bindParam(":username", $username);
+            $temp->bindParam(":password", $password);
             $temp->execute();
             $res = true;
         } catch (Exception $ex) {
@@ -301,13 +338,15 @@ class accessor {
             $temp->closeCursor();
         }
         return $res;
-    }   //update user password
+    }
+
+//update user password
 
     public function userAccountStatus($username, $password, $tf) {
         $res = false;
         try {
             $temp = $this->conn->prepare($tf ? $this->activateUserStatementString : $this->deactivateUserStatementString);
-            $temp->bindParam(":username",$username);
+            $temp->bindParam(":username", $username);
             $temp->bindParam(":password", password_hash($password, $this->salt));
             $temp->execute();
             $res = true;
@@ -318,4 +357,5 @@ class accessor {
         }
         return $res;
     }
+
 }
