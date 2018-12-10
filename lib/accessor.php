@@ -137,10 +137,16 @@ class accessor {
             if($outTemp != false) { //not false from return
 
               if ($outTemp["status"] != "0") {  //if we can validate that the user is active
-                $tempOut = $outTemp["PermissionLevel"];
                 session_start();
                 $_SESSION['username'] = $username;  //store UserName
                 $_SESSION['permissionLevel'] = $tempOut;  //store permission level
+
+                $res = new \stdClass();
+                $res->username = $username;
+                $res->permission = $outTemp["PermissionLevel"];
+
+                $tempOut = $res;
+
               } else {
                 throw new Exception("account deactivated");
               } //end if catch for user active status
