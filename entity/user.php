@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-class User {
+class User implements JsonSerializable{
     private $username;
     private $password;
     private $email;
@@ -15,12 +15,11 @@ class User {
     private $accountStatus;
     
     //used for returning as object from SQL;
-    function __construct($username, $password, $email, $permission, $accountCreationTime, $accountStatus) {
+    function __construct($username, $password, $email, $permission, $accountStatus) {
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
         $this->permission = $permission;
-        $this->accountCreationTime = $accountCreationTime;
         $this->accountStatus = $accountStatus;
     }
 
@@ -48,5 +47,8 @@ class User {
         return $this->accountStatus;
     }
 
+        public function jsonSerialize() {
+        return get_object_vars($this);
+    }
 
 }

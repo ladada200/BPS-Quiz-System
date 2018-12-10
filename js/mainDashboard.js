@@ -82,8 +82,7 @@ function getUserList(text) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-		console.log(xmlhttp.responseText);	
-                showUserList(xmlhttp.responseText); // do something when server responds
+		showUserList(xmlhttp.responseText); // do something when server responds
                         
 		}
 	};
@@ -162,7 +161,7 @@ function showSearch() {
 
 function showUserList(text) {
 
-	var userList = JSON.parse(text);
+	var userList = JSON.parse(text); 
 
 	var div = document.querySelector(".userList");
 
@@ -170,9 +169,9 @@ function showUserList(text) {
 
 	content += "<select class='form-control userSelect'>";
 
-	for (var i = 0; i < userList.users.length; i++) {
+	for (var i = 0; i < userList.length; i++) {
 
-		content += "<option value='" + userList.users[i] + "'> User " + userList.users[i] + "</option>";
+		content += "<option value='" + userList[i].username + "'> User " + userList[i].username + "</option>";
 
 	}
 
@@ -182,10 +181,11 @@ function showUserList(text) {
 }
 
 function getQuizzes() {
-	var url = "quizzes.json"; // file name or server-side process name
+	var url = "quiz/"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    console.log(xmlhttp.responseText);
 			showQuizzes(xmlhttp.responseText); // do something when server responds
 		}
 	};
