@@ -272,9 +272,9 @@ class accessor {
             foreach ($dbresults as $r) {
 
                 //$quizID = $r['userID'];
-                $quiztitle = $r['quizTitle'];
+                $quizTitle = $r['quizTitle'];
                 $input = [];
-                $tags = $r['tags'];
+                $tags = [];
                 $author = $r['author'];
                 $obj = new Quiz($quizTitle, $input, $tags, $author);
                 array_push($result, $obj);

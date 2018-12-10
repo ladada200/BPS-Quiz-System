@@ -1,35 +1,18 @@
 window.onload = function () {
 
-	getUser();
+	showUser();
 	getUserList();
-
-}
-
-function getUser() {
-	var url = "user12227.json"; // file name or server-side process name
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function () {
-		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			showUser(xmlhttp.responseText); // do something when server responds
-			showPassword(xmlhttp.responseText);
-			showDelete(xmlhttp.responseText);
-			showCreateUser(xmlhttp.responseText);
-			showCreateQuestion(xmlhttp.responseText);
-			showCreateQuiz(xmlhttp.responseText);
-		}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
 
 }
 
 function getUserList(text) {
 
-	var url = "userlist.json"; // file name or server-side process name
+	var url = "../account/"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			showUserList(xmlhttp.responseText); // do something when server responds
+		showUserList(xmlhttp.responseText); // do something when server responds
+                        
 		}
 	};
 	xmlhttp.open("GET", url, true);
@@ -42,11 +25,11 @@ function showUser(text) {
 
 	var userDiv = document.querySelector(".user");
 
-	var user = JSON.parse(text);
+	var user = JSON.parse(window.localStorage.getItem("currentUser"));
 
 	var content = "";
 
-	content += "Welcome, User " + user.userName + "! <a href='settings.html' target='_blank'>Settings</a>";
+	content += "Welcome, User " + user.userName + "! <a href='settings.html' >Settings</a> <a href='login.html' >Log Out</a>";
 
 	userDiv.innerHTML = content;
 }
@@ -99,7 +82,7 @@ function showDelete(text) {
 
 function showUserList(text) {
 
-	var userList = JSON.parse(text);
+	var userList = JSON.parse(text); 
 
 	var div = document.querySelector(".userList");
 
@@ -107,9 +90,9 @@ function showUserList(text) {
 
 	content += "<select class='form-control userSelect'>";
 
-	for (var i = 0; i < userList.users.length; i++) {
+	for (var i = 0; i < userList.length; i++) {
 
-		content += "<option value='" + userList.users[i] + "'> User " + userList.users[i] + "</option>";
+		content += "<option value='" + userList[i].username + "'> User " + userList[i].username + "</option>";
 
 	}
 

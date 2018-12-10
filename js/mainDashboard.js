@@ -10,23 +10,6 @@ window.onload = function () {
 
 };
 
-//function getUser() {
-////	var url = "user12227.json"; // file name or server-side process name
-////	var xmlhttp = new XMLHttpRequest();
-////	xmlhttp.onreadystatechange = function () {
-////		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-////			showUser(xmlhttp.responseText); // do something when server responds
-////			showSearch(xmlhttp.responseText);
-////		}
-////	};
-////	xmlhttp.open("GET", url, true);
-////	xmlhttp.send();
-//
-//var user = JSON.parse(window.localStorage.getItem("currentUser"));
-//
-//
-//}
-
 function showUser() {
 
 
@@ -36,7 +19,7 @@ function showUser() {
 
 	var content = "";
 
-	content += "Welcome, User " + user.username + "! <a href='settings.html' target='_blank'>Settings</a> <a href='login.html' target='_blank'>Log Out</a>";
+	content += "Welcome, User " + user.username + "! <a href='settings.html' >Settings</a> <a href='login.html'>Log Out</a>";
 
 	userDiv.innerHTML = content;
 	
@@ -78,7 +61,7 @@ function showScores(text) {
 
 function getUserList(text) {
 
-	var url = "account/"; // file name or server-side process name
+	var url = "../account/"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
@@ -197,7 +180,7 @@ function showQuizzes(text) {
 
 	var quizzes = JSON.parse(text);
 
-	var length = quizzes.quizzes.length;
+	var length = quizzes.length;
 
 	var div = document.querySelector(".popularQuiz");
 
@@ -211,10 +194,10 @@ function showQuizzes(text) {
 
 		if (i % 2 == 0) {
 
-			content += "<div class='black'>" + quizzes.quizzes[i] + "</div>";
+			content += "<div class='black'>" + quizzes[i].quizTitle + "</div>";
 
 		} else {
-			content += "<div class='grey'>" + quizzes.quizzes[i] + "</div>";
+			content += "<div class='grey'>" + quizzes[i].quizTitle + "</div>";
 		}
 
 
