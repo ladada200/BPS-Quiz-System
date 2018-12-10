@@ -40,10 +40,6 @@ class accessor {
     private $searchQuiz = NULL;
     private $searchQuestion = NULL;
 
-    public function getConn() {
-      return $this->conn;
-    }
-
     public function __construct() {
         $cm = new ConnectionManager();
         $this->conn = $cm->connect_db();
@@ -215,14 +211,9 @@ class accessor {
             $output = $ex->getMessage();
         }
         return $output;
-<<<<<<< HEAD
-    }   //Create new user
-
-=======
     }
 
 //Create new user
->>>>>>> 827c7234201b0b9742ed74ba35a46a3524755d08
 
     public function getUsersByQuery($showAllUsersStatementString) {
         $result = [];
@@ -236,12 +227,6 @@ class accessor {
 
 
             foreach ($dbresults as $r) {
-<<<<<<< HEAD
-                $itemID = $r['userID'];
-                $itemCategoryID = $r['userName'];
-                $description = $r['permissionLevel'];
-                $obj = new user($UserID, $username, $permission);
-=======
 
 
                 $userID = $r['userID'];
@@ -251,7 +236,6 @@ class accessor {
                 $status = $r['status'];
                 $email = $r['email'];
                 $obj = new User($username, $password, $email, $permission, $status);
->>>>>>> 827c7234201b0b9742ed74ba35a46a3524755d08
                 array_push($result, $obj);
             }
         } catch (Exception $e) {
@@ -307,10 +291,6 @@ class accessor {
     public function getAllQuizzess() {
         return $this->getQuizzesByQuery("SELECT * FROM Quiz");
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 827c7234201b0b9742ed74ba35a46a3524755d08
 
     public function showAll() {
         try {
