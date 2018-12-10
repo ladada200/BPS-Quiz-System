@@ -2,45 +2,41 @@
 
 window.onload = function () {
 
-        pullUser();
-	getUser();
+        showUser();
+        showSearch();
 	getQuizzes();
         
 	
 
-}
+};
 
-function pullUser() {
-    
-    var userObj = JSON.parse(window.localStorage.getItem("currentUser"));
-    
-}
+//function getUser() {
+////	var url = "user12227.json"; // file name or server-side process name
+////	var xmlhttp = new XMLHttpRequest();
+////	xmlhttp.onreadystatechange = function () {
+////		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+////			showUser(xmlhttp.responseText); // do something when server responds
+////			showSearch(xmlhttp.responseText);
+////		}
+////	};
+////	xmlhttp.open("GET", url, true);
+////	xmlhttp.send();
+//
+//var user = JSON.parse(window.localStorage.getItem("currentUser"));
+//
+//
+//}
 
-
-function getUser() {
-	var url = "user12227.json"; // file name or server-side process name
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function () {
-		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			showUser(xmlhttp.responseText); // do something when server responds
-			showSearch(xmlhttp.responseText);
-		}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-
-}
-
-function showUser(text) {
+function showUser() {
 
 
 	var userDiv = document.querySelector(".user");
 
-	var user = JSON.parse(text);
+	var user = JSON.parse(window.localStorage.getItem("currentUser"));
 
 	var content = "";
 
-	content += "Welcome, User " + user.userName + "! <a href='settings.html' target='_blank'>Settings</a>";
+	content += "Welcome, User " + user.username + "! <a href='settings.html' target='_blank'>Settings</a> <a href='login.html' target='_blank'>Log Out</a>";
 
 	userDiv.innerHTML = content;
 	
@@ -82,11 +78,13 @@ function showScores(text) {
 
 function getUserList(text) {
 
-	var url = "userlist.json"; // file name or server-side process name
+	var url = "account/"; // file name or server-side process name
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			showUserList(xmlhttp.responseText); // do something when server responds
+		console.log(xmlhttp.responseText);	
+                showUserList(xmlhttp.responseText); // do something when server responds
+                        
 		}
 	};
 	xmlhttp.open("GET", url, true);
@@ -94,7 +92,7 @@ function getUserList(text) {
 
 }
 
-function showSearch(text) {
+function showSearch() {
 
 	var resultsdiv = document.querySelector(".searchResults");
 	var quizdiv = document.querySelector(".searchQuiz");
@@ -102,7 +100,7 @@ function showSearch(text) {
 	var contentResults = "";
 	var contentQuiz = "";
 
-	var user = JSON.parse(text);
+	var user = JSON.parse(window.localStorage.getItem("currentUser"));
 
 
 	contentResults += "<div class='col-sm-12'><h2>Results Search</h2><br></div>";
