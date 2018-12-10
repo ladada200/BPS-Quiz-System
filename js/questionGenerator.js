@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -24,39 +24,41 @@ function eventHandler(e) {
             addQuestion();
             break;
         case "remove":
-            removeQuestion(this.parentNode.id);
+            removeQuestion(this.parentNode);
             break;
-        case "":
-            
+        case "more":
+            more(this.parentNode);
+            break;
+        case "less":
+
+            //less(this.parentNode.id);
             break;
         default:
             break;
-    }    
+    }
+}
+
+function more(input) {
+  document.querySelector("#" + input.id).innerHTML += "<input type=\"text\">\n";
 }
 
 function addQuestion() {
-    var allQuestions = document.querySelectorAll("li");
-    document.querySelector("#questionList").innerHTML += 
-            "<li id=\""+(parseInt(allQuestions[allQuestions.length-1].id) + 1)+"\">" 
-            + (parseInt(allQuestions[allQuestions.length-1].id) + 1) //temporary, just for debugging.
-            /* 
-             * Fill this section with the HTML used for the question.
-             */
-            + " <button type=\"button\" class=\"add\">Add Question</button>" 
-            + " <button type=\"button\" class=\"remove\">Remove</button>";
+    var allQuestions = document.querySelector("#questionList").querySelectorAll("li");
+    var x = allQuestions[allQuestions.length -1];
+    var q = x.cloneNode(true);
+    q.id = Number(allQuestions[allQuestions.length -1].id) + 1;
+    document.querySelector("#questionList").appendChild(q);
     clickHandlers();
 }
 
 function removeQuestion(input) {
-    console.log(input);
-    var allQuestions = document.querySelectorAll("li");
+    console.log(input.parentNode);
+    var allQuestions = document.querySelector("#questionList").querySelectorAll("li");
     if (allQuestions.length > 1) {
-        document.querySelector("#questionList").innerHTML = "";
         for(var i = 0; i < allQuestions.length; i++) {
-            if (allQuestions[i].id != input) {
-                document.querySelector("#questionList").innerHTML += "<li id=\""+allQuestions[i].id+"\">" + allQuestions[i].innerHTML + "</li>";
-            }
-            
+          if (allQuestions[i].id == input.parentNode.id) {
+            document.querySelector("#questionList").removeChild(allQuestions[i]);
+          }
         }
         clickHandlers();
     }
@@ -82,4 +84,4 @@ var car = document.querySelector(".highlighted").querySelectorAll("td");
         carColour: car[4].innerHTML,
         carPrice: car[5].innerHTML
     }
-*/  
+*/
