@@ -42,6 +42,10 @@ class accessor {
     private $searchQuiz = NULL;
     private $searchQuestion = NULL;
 
+    public function getConn() {
+      return $this->conn;
+    }
+
     public function __construct() {
         $cm = new ConnectionManager();
         $this->conn = $cm->connect_db();
@@ -210,9 +214,9 @@ class accessor {
         }
         return $output;
     }   //Create new user
-    
-    
-        public function getUsersByQuery($showAllUsersStatementString) {
+
+
+    public function getUsersByQuery($showAllUsersStatementString) {
         $result = [];
 
         try {
@@ -221,9 +225,9 @@ class accessor {
             $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($dbresults as $r) {
-                $itemID = $r['userid'];
-                $itemCategoryID = $r['username'];
-                $description = $r['permission'];
+                $itemID = $r['userID'];
+                $itemCategoryID = $r['userName'];
+                $description = $r['permissionLevel'];
                 $obj = new user($UserID, $username, $permission);
                 array_push($result, $obj);
             }
@@ -242,13 +246,13 @@ class accessor {
 
     /**
      * Gets all menu items.
-     * 
+     *
      * @return array MenuItem objects, possibly empty
      */
     public function getAllUsers() {
         return $this->getUsersByQuery("SELECT * FROM Users");
     }
-    
+
 
     public function showAll() {
         try {

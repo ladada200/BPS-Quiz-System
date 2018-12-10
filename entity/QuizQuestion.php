@@ -52,4 +52,3 @@ class QuizQuestion {
     }
 
 }
-header("location: ../");

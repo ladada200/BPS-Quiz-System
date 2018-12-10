@@ -2,9 +2,7 @@
 
 $projectRoot = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/BPS-Quiz-System'; //test
 require($projectRoot . '/lib/accessor.php');
-require($projectRoot . '/entity/Quiz.php');
-require($projectRoot . '/entity/QuizQuestion.php');
-require($projectRoot . '/entity/QuizQuestions.php');
+
 
 $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
@@ -12,8 +10,8 @@ if ($method == "POST") {
 
   $body = file_get_contents('php://input');
   $output = json_decode($body, true);
-  $temp = new handleQuiz($output['author'], $output['quizTitle'], $output['quizQuestions'], $output['quizTags']);
-  return $temp->createUser();
+  $temp = new handleQuiz($output['author'], $output['title'], $output['questions'], $output['tags']);
+  return $temp->insertQuiz();
 
 } else {
   return "*** ERROR: Unable to process request";
@@ -24,6 +22,8 @@ class handleQuiz {
   private $quizTitle = "";
   private $quizQuestions = [];
   private $quizTags = [];
+  private $conn = "";
+
 
   function __construct($author, $quizTitle, $quizQuestions, $quizTags) {
       $this->quizTitle = $quizTitle;
@@ -34,9 +34,13 @@ class handleQuiz {
   public function insertQuiz() {
     $response = "";
     $numsArr = [];
-    try {
+    $tempQuizTags = "";
 
-      $query = $temp->conn->query("SELECT MAX(quizID) FROM QUIZ");
+    try {
+      $temp = new accessor();
+      $this->conn = $temp->getConn();
+
+      $query = $this->conn->query("SELECT MAX(quizID) FROM QUIZ");
       $test = $query->fetch(PDO::FETCH_ASSOC);
       $result = (int)$test["MAX(quizID)"];
       $query->closeCursor();
@@ -52,79 +56,64 @@ class handleQuiz {
       } //end loop
 
       foreach($this->quizQuestions as $value) {
-        $temp = new accessor();
 
         $tempRes = "";
-
         //Question choices
         for($i = 0; $i < count($value['choices']); $i++) {
-          $tempRes .= $value['choices'][$i];
+          $tempRes .= "\"" . $value['choices'][$i] . "\"";
           if ($i != (count($value['choices']) -1)) {
             $tempRes .= ",";
           }
         } //end loop
 
-
+        $Questiontags = "";
         //Question Tags
         for($i = 0; $i < count($value['tags']); $i++) {
-          $Questiontags .= $value['tags'][$i];
+          $Questiontags .= "\"" . $value['tags'][$i] . "\"";
           if ($i != (count($value['tags']) -1)) {
             $Questiontags .= ",";
           }
         } //end loop
 
         //get max block
-        $query = $temp->conn->query("SELECT MAX(questionID) FROM question");
+        $query = $this->conn->query("SELECT MAX(questionID) FROM question");
         $test = $query->fetch(PDO::FETCH_ASSOC);
         $result = (int)$test["MAX(questionID)"];
         $query->closeCursor();
         $result++;
-        $ID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
-
-
+        $questionID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
 
         //insert block
-        $res = $temp->conn->prepare("INSERT INTO `question` (`questionID`,`choices`,`answer`) VALUES (:questionID, :choices, :answer)");
-        $res->bindParam(":questionID", $ID);
+        $res = $this->conn->prepare("INSERT INTO `question` (`questionID`,`choices`,`answer`) VALUES (:questionID, :choices, :answer)");
+        $res->bindParam(":questionID", $questionID);
         $res->bindParam(":choices", $tempRes);
         $res->bindParam(":answer", $value['answer']);
+        $res->execute();
+        $res->closeCursor();
 
-        if($res->execute()) {
-          $res->closeCursor();
+        array_push($numsArr, $questionID);
 
-          array_push($numsArr, $ID);
+        $rest = $this->conn->prepare("INSERT INTO `quizQuestions` (`question`, `questionID`, `quizID`, `tags`) VALUES (:question, :questionID, :quizID, :tags)");
+        $rest->bindParam(":question", $value['questionText']);
+        $rest->bindParam(":questionID", $questionID);
+        $rest->bindParam(":quizID", $quizID);
+        $rest->bindParam(":tags", $Questiontags);
 
-
-
-          $res = $temp->conn->prepare("INSERT INTO `quizQuestions` (`question`, `questionID`, `quizID`, `tags`) VALUES (:question, :questionID, :quizID, :tags)");
-          $res->bindParam(":question", $value['questionText']);
-          $res->bindParam(":questionID", $ID);
-          $res->bindParam(":quizID", $quizID);
-          $res->bindParam(":tags", $Questiontags);
-
-          if($res->execute()) {
-            $res->closeCursor();
-
-            $res = $temp->conn->prepare("INSERT INTO `quiz` (`author`, `quizID`, `quizTitle`, `tags`) VALUES (:author, :quizID, :quizTitle, :quizTags)");
-            $res->bindParam(":author", $this->username);
-            $res->bindParam(":quizID", $quizID);
-            $res->bindParam(":quizTitle", $this->quizTitle);
-            $res->bindParam(":quizTags", $tempQuizTags);
-            $response = $res->execute() ? "Quiz successfully added" : "Could not add quiz";
-
-          };
-
-        } else {
-          throw new \Exception("Err");
-        } //end if
+        $rest->closeCursor();
 
 
       } //end loop
 
-
+      $resp = $this->conn->prepare("INSERT INTO `quiz` (`author`, `quizID`, `quizTitle`, `tags`) VALUES (:author, :quizID, :quizTitle, :quizTags)");
+      $resp->bindParam(":author", $this->author);
+      $resp->bindParam(":quizID", $quizID);
+      $resp->bindParam(":quizTitle", $this->quizTitle);
+      $resp->bindParam(":quizTags", $tempQuizTags);
+      $resp->execute();
+      $resp->closeCursor();
 
     } catch (Exception $ex) {
-      $response = $ex;
+      $response = $ex->getMessage();
     }
 
     return $response;
