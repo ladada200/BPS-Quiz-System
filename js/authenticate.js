@@ -31,6 +31,7 @@ function evth(e) {
                 var resp = this.responseText;
                 console.log(resp);
                 storeUser(xmlhttp.responseText);
+                window.location.href = "mainDashboard.html";
             }
         };
         xmlhttp.open("login", url, true);
@@ -38,42 +39,30 @@ function evth(e) {
         xmlhttp.send(JSON.stringify(obj));
 
     } else if (e.srcElement.id == "btnContinueAsGuest") {
-
+        
+        var uName = "guest";
+        var pWord = "test"
+        var obj = {
+            "username": uName,
+            "password": pWord
+        };
+        var url = "account/";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                var resp = this.responseText;
+                console.log(resp);
+                storeUser(xmlhttp.responseText);
+                window.location.href = "mainDashboard.html";
+            }
+        };
+        xmlhttp.open("login", url, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send(JSON.stringify(obj));
     }
     
     
 }
-//
-//function getUser(e) {
-//    
-//    var url = "";
-//    
-//    if (e.srcElement.id == "btnLogin") {
-//	url = "user12227.json"; // file name or server-side process name
-//	var xmlhttp = new XMLHttpRequest();
-//	xmlhttp.onreadystatechange = function () {
-//		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-//			storeUser(xmlhttp.responseText); // do something when server responds
-//                        window.location.href = "mainDashboard.html";
-//		}
-//	};
-//	xmlhttp.open("GET", url, true);
-//	xmlhttp.send();
-//    } else if (e.srcElement.id == "btnContinueAsGuest") {
-//        
-//        	url = "guest.json"; // file name or server-side process name
-//	var xmlhttp = new XMLHttpRequest();
-//	xmlhttp.onreadystatechange = function () {
-//		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-//			storeUser(xmlhttp.responseText); // do something when server responds
-//                        window.location.href = "mainDashboard.html";
-//		}
-//	};
-//	xmlhttp.open("GET", url, true);
-//	xmlhttp.send();
-//        
-//    }
-//}
 
 function storeUser(text) {
     
