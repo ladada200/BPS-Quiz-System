@@ -11,7 +11,7 @@ if ($method == "POST") {
   $body = file_get_contents('php://input');
   $output = json_decode($body, true);
   $temp = new handleQuiz($output['author'], $output['title'], $output['questions'], $output['tags']);
-  return $temp->insertQuiz();
+  echo $temp->insertQuiz();
 
 } else {
   return "*** ERROR: Unable to process request";
@@ -45,15 +45,23 @@ class handleQuiz {
       $result = (int)$test["MAX(quizID)"];
       $query->closeCursor();
       $result++;
-      $QuizID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
+      $quizID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
 
       //Quiz Tags
       for($i = 0; $i < count($this->quizTags); $i++) {
-        $tempQuizTags .= $this->quizTags[$i];
+        $tempQuizTags .= "\"" . $this->quizTags[$i] . "\"";
         if ($i != (count($this->quizTags) -1)) {
           $tempQuizTags .= ",";
         }
       } //end loop
+
+      $resp = $this->conn->prepare("INSERT INTO `quiz` (`author`, `quizID`, `quizTitle`, `tags`) VALUES (:author, :quizID, :quizTitle, :quizTags)");
+      $resp->bindParam(":author", $this->author);
+      $resp->bindParam(":quizID", $quizID);
+      $resp->bindParam(":quizTitle", $this->quizTitle);
+      $resp->bindParam(":quizTags", $tempQuizTags);
+      $resp->execute();
+      $resp->closeCursor();
 
       foreach($this->quizQuestions as $value) {
 
@@ -81,7 +89,11 @@ class handleQuiz {
         $result = (int)$test["MAX(questionID)"];
         $query->closeCursor();
         $result++;
+
         $questionID = STR_PAD($result, 3, "0", STR_PAD_LEFT);
+
+
+
 
         //insert block
         $res = $this->conn->prepare("INSERT INTO `question` (`questionID`,`choices`,`answer`) VALUES (:questionID, :choices, :answer)");
@@ -91,29 +103,23 @@ class handleQuiz {
         $res->execute();
         $res->closeCursor();
 
-        array_push($numsArr, $questionID);
-
-        $rest = $this->conn->prepare("INSERT INTO `quizQuestions` (`question`, `questionID`, `quizID`, `tags`) VALUES (:question, :questionID, :quizID, :tags)");
+        $rest = $this->conn->prepare("INSERT INTO `quizquestions` (`question`, `questionID`, `quizID`, `tags`) VALUES (:question, :questionID, :quizID, :tags)");
         $rest->bindParam(":question", $value['questionText']);
         $rest->bindParam(":questionID", $questionID);
         $rest->bindParam(":quizID", $quizID);
         $rest->bindParam(":tags", $Questiontags);
+        $rest->execute();
 
         $rest->closeCursor();
 
 
+
       } //end loop
 
-      $resp = $this->conn->prepare("INSERT INTO `quiz` (`author`, `quizID`, `quizTitle`, `tags`) VALUES (:author, :quizID, :quizTitle, :quizTags)");
-      $resp->bindParam(":author", $this->author);
-      $resp->bindParam(":quizID", $quizID);
-      $resp->bindParam(":quizTitle", $this->quizTitle);
-      $resp->bindParam(":quizTags", $tempQuizTags);
-      $resp->execute();
-      $resp->closeCursor();
+
 
     } catch (Exception $ex) {
-      $response = $ex->getMessage();
+      $response = $ex;
     }
 
     return $response;

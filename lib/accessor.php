@@ -40,6 +40,10 @@ class accessor {
     private $searchQuiz = NULL;
     private $searchQuestion = NULL;
 
+    public function getConn() {
+      return $this->conn;
+    }
+
     public function __construct() {
         $cm = new ConnectionManager();
         $this->conn = $cm->connect_db();
