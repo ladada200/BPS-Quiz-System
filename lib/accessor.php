@@ -221,10 +221,10 @@ class accessor {
             $dbresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($dbresults as $r) {
-                $itemID = $r['userid'];
-                $itemCategoryID = $r['username'];
-                $description = $r['permission'];
-                $obj = new user($UserID, $username, $permission);
+                $userID = $r['userid'];
+                $username = $r['username'];
+                $permission = $r['permission'];
+                $obj = new user($userID, $username, $permission);
                 array_push($result, $obj);
             }
         }
