@@ -213,7 +213,7 @@ class accessor {
 
     public function showAll() {
         try {
-            $showAllUsersStatement = $this->showAllUsersStatementString;
+            $showAllUsersStatement = $this->conn->query($this->showAllUsersStatementString);
             $showAllUsersStatement->execute();
             $res = $showAllUsersStatement->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $ex) {
