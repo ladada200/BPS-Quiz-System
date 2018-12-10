@@ -21,17 +21,17 @@ if ($method == "login") {
     $output = json_decode($body, true);
     $temp = new userMethod($output['username'], $output['password'], $output['email']);
     echo $temp->createUser();
-    
 
-} 
+
+}
 
 else if($method == "GET") {
-    
+
             $ua = new accessor();
             $results = $ua->getAllUsers();
             $results = json_encode($results, true);
             echo $results;
-    
+
 }
 
 else if ($method == "deactivateUser") {
