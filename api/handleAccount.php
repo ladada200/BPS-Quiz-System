@@ -21,8 +21,30 @@ if ($method == "login") {
     $output = json_decode($body, true);
     $temp = new userMethod($output['username'], $output['password'], $output['email']);
     echo $temp->createUser();
+    
 
-} else if ($method == "deactivateUser") {
+} 
+
+else if($method == "GET") {
+    
+      if (!filter_has_var(INPUT_GET, 'itemid')) {
+        try {
+            $ua = new accessor();
+            $results = $ua->showAll();
+            $results = json_encode($results);
+            echo $results;
+        }
+        catch (Exception $e) {
+            echo "ERROR " . $e->getMessage();
+        }
+    }
+    else {
+        ChromePhp::log("You are requesting item " . filter_input(INPUT_GET, 'itemid'));
+    }
+    
+}
+
+else if ($method == "deactivateUser") {
 
     $body = file_get_contents('php://input');
     $contents = json_decode($body, true);
