@@ -45,8 +45,8 @@ class QuizQuestion {
           $temp->bindParam(":answer", $this->answer);
           $temp->execute();
 
-        } catch (ex) {
-          $temp = ex->getMessage();
+        } catch (Exception $ex) {
+          $temp = $ex->getMessage();
         }
         return $temp;
     }

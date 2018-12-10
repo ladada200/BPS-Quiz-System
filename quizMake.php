@@ -30,8 +30,10 @@ and open the template in the editor.
                       <td valign="top">
                         Choices:
                       </td>
-                      <td id="choices">
-                        <input type="text" id="0" /><button type="button" class="more">+</button><button type="button" class="less">-</button>
+                      <td>
+                          <div id="choices">
+                              <div id="0"><input type="text" id="0" /><button type="button" class="more">+</button><button type="button" class="less">-</button></div>
+                          </div>
                       </td>
                     </tr>
                     <tr>

@@ -39,7 +39,8 @@ function eventHandler(e) {
 }
 
 function more(input) {
-  document.querySelector("#" + input.id).innerHTML += "<input type=\"text\">\n";
+  document.querySelector("#choices").innerHTML += "<div><input type=\"text\"><button type=\"button\">+</button><button type=\"button\">-</button></div>\n";
+  clickHandlers();
 }
 
 function addQuestion() {
@@ -56,7 +57,7 @@ function removeQuestion(input) {
     var allQuestions = document.querySelector("#questionList").querySelectorAll("li");
     if (allQuestions.length > 1) {
         for(var i = 0; i < allQuestions.length; i++) {
-          if (allQuestions[i].id == input.parentNode.id) {
+          if ((Number(allQuestions[i].id) +1) == (Number(input.parentNode.id)+1) ) {
             document.querySelector("#questionList").removeChild(allQuestions[i]);
           }
         }
